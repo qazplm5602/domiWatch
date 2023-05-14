@@ -30,10 +30,9 @@ public class LobbyManager : MonoBehaviour
     bool isConnect = false;
     string WhyDisconnect; // 왜 튕겼지..
 
-    private void Start() {
+    private void Awake() {
         NetworkCore.EventConnect += SuccessConnect;
         NetworkCore.EventDisconnect += ErrorConnect; // 리스너 등록
-        NetworkCore.EventListener["disconnect.why"] = SetWhyDisconnect;
         NetworkCore.EventListener["Lobby.Init"] = LobbyChange;
         PlayButton.GetComponent<LobbyButton>().SetLock();
 
@@ -100,7 +99,7 @@ public class LobbyManager : MonoBehaviour
         NetworkCore.Send("domiServer.Login", new domiLoginForm(ID_Input.text, Password_Input.text));
     }
 
-    void ErrorConnect() {
+    void ErrorConnect(string Why) {
         // 에러 표시
         ErrorUI.SetActive(true);
         ErrorUI.GetComponent<CanvasGroup>().DOFade(1, .2f);

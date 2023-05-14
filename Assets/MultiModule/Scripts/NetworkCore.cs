@@ -37,13 +37,14 @@ public class NetworkCore : MonoBehaviour
     NetworkStream stream;
     byte[] buffer;
     StringBuilder PacketPlus = new(); // 패킷 재조립
+    string WhyDisconnect;
 
     private readonly Queue<UnityAction> _actions = new();
 
     // 트리거
     public static Dictionary<string, UnityAction<JsonData>> EventListener = new();
     public static UnityAction EventConnect;
-    public static UnityAction EventDisconnect;
+    public static UnityAction<string> EventDisconnect;
 
     private void Awake() {
         if (instance == null) {
@@ -52,6 +53,12 @@ public class NetworkCore : MonoBehaviour
         }
         else
             throw new System.Exception("[domi Network] 네트워크 코어는 하나의 오브젝트 안에서만 구성해야 합니다.");
+
+        // 연결 끊김 사유
+        NetworkCore.EventListener["disconnect.why"] = (JsonData why) => {
+            WhyDisconnect = (string)why;
+            client.Close();
+        };
     }
     
     // 엔티티가 없어지면 연결을 끊음 (에디터 playmode 가 아니여도 connection이 연결되어있음 ㅇㅅㅇ)
@@ -161,7 +168,7 @@ public class NetworkCore : MonoBehaviour
     // [이벤트 리스너] 서버와 연결끊김
     void OnDisconnect() {
         client = null; // connection 지움
-        EventDisconnect?.Invoke(); // 이벤트 실행
+        EventDisconnect?.Invoke(WhyDisconnect); // 이벤트 실행
     }
 
     ////////////////// 코루틴 //////////////////
