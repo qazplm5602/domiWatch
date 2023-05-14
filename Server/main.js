@@ -4,6 +4,7 @@ global.TriggerEvent = {};
 
 // 스크륍트
 const UserManager = require("./lib/UserManager.js");
+const LoginSys = require("./scripts/LoginSystem.js");
 
 const server = net.createServer(function(socket) {
     ////////// socket 초기화 //////////
@@ -33,67 +34,87 @@ const server = net.createServer(function(socket) {
         socket.destroy();
     }
 
-    socket.once("data", function(data) {
+    // 이제!! 로그인을 성공했으니 데이터 받아준다.
+    const SocketEvent_Init = (MyID) => {
+        let PacketPlus = "";
+        socket.on("data", function(data) {
+            // 누락된 데이터가 있으면 붙임
+            if (PacketPlus.length > 0) {
+                data = PacketPlus+data;
+                PacketPlus = ""; // 초기화
+            }
+            
+            const SlicePacket = data.split("|domi\\SLICE\\packet|");
+    
+            for (let index = 0; index < SlicePacket.length; index++) {
+                const message = SlicePacket[index];
+                
+                if (message.length > 0)
+                    if (index === (SlicePacket.length - 1)) { // 패킷 손실 감지
+                        PacketPlus = message;
+                    } else {
+                        try {
+                            const MessageDecode = JSON.parse(message);
+                            if (MessageDecode.type !== undefined && MessageDecode.data !== undefined) {
+                                const Callback = global.TriggerEvent[MessageDecode.type];
+                                if (typeof(Callback) === "function") {
+                                    Callback(MyID, MessageDecode.data); // 콜백 실행
+                                } else
+                                    console.error(`[main] ${MyID} 알수없는 Trigger : ${MessageDecode.type}`);
+                            } else {
+                                console.error(`[main] ${MyID} 잘못된 정보를 전송함.`);
+                            }
+                        } catch {
+                            console.error(`[main] ${MyID} JSON 데이터 형식이 아님.\n${message}`);
+                        }
+                    }
+            }
+        });
+        socket.once("close", function() {
+            UserManager.RemovePlayer(MyID);
+            console.log(`[main] ${MyID} 나감.`);
+        });
+        socket.on("error", function(err) {
+            // console.error(err);
+        });
+    }
+
+    socket.once("data", async function(data) {
+        data = data.replace("|domi\\SLICE\\packet|","");
         let message;
         try {
             message = JSON.parse(data);
         } catch {}
 
-        if (message === undefined || message.id === undefined || message.password === undefined) {
+        if (message === undefined || message.type !== "domiServer.Login" || message.data === undefined || message.data.id === undefined || message.data.password === undefined) {
             socket.kick("잘못된 로그인 데이터 입니다.");
             return;
         }
-
-        console.log(message);
-    });
-
-
-    // 밑에 코드는 아직이지롱
-    if (true) return;
-
-    const MyID = UserManager.AddPlayer(null, socket);
-    console.log(`[main] ${socket.remoteAddress} ${MyID} 연결.`);
-
-    let PacketPlus = "";
-    socket.on("data", function(data) {
-        // 누락된 데이터가 있으면 붙임
-        if (PacketPlus.length > 0) {
-            data = PacketPlus+data;
-            PacketPlus = ""; // 초기화
-        }
+        const ID = message.data.id;
+        const Password = message.data.password;
         
-        const SlicePacket = data.split("|domi\\SLICE\\packet|");
-
-        for (let index = 0; index < SlicePacket.length; index++) {
-            const message = SlicePacket[index];
-            
-            if (message.length > 0)
-                if (index === (SlicePacket.length - 1)) { // 패킷 손실 감지
-                    PacketPlus = message;
-                } else {
-                    try {
-                        const MessageDecode = JSON.parse(message);
-                        if (MessageDecode.type !== undefined && MessageDecode.data !== undefined) {
-                            const Callback = global.TriggerEvent[MessageDecode.type];
-                            if (typeof(Callback) === "function") {
-                                Callback(MyID, MessageDecode.data); // 콜백 실행
-                            } else
-                                console.error(`[main] ${MyID} 알수없는 Trigger : ${MessageDecode.type}`);
-                        } else {
-                            console.error(`[main] ${MyID} 잘못된 정보를 전송함.`);
-                        }
-                    } catch {
-                        console.error(`[main] ${MyID} JSON 데이터 형식이 아님.\n${message}`);
-                    }
-                }
+        if (String(ID).length <= 0 || String(Password).length <= 0) {
+            socket.kick("아아디, 패스워드를 확인하세요.");
+            return;
         }
-    });
-    socket.once("close", function() {
-        UserManager.RemovePlayer(MyID);
-        console.log(`[main] ${socket.remoteAddress} ${MyID} 나감.`);
-    });
-    socket.on("error", function(err) {
-        // console.error(err);
+
+        let result = await LoginSys.Login(ID, Password);
+
+        if (result.err) {
+            socket.kick(result.err);
+            return;
+        }
+
+        // 로그인 성공!
+        UserManager.AddPlayer(result.id, result.name, socket);
+        // 문을 열어주쟈
+        SocketEvent_Init(result.id);
+
+        // 클라에 알려줌
+        socket.send("domiServer.Hello", {
+            id: result.id,
+            name: result.name
+        });
     });
 });
 

@@ -672,7 +672,7 @@ GameObject:
   - component: {fileID: 192015090}
   - component: {fileID: 192015089}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: id_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -807,7 +807,7 @@ GameObject:
   - component: {fileID: 195044401}
   - component: {fileID: 195044400}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: password_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1063,6 +1063,7 @@ MonoBehaviour:
   PlayButton: {fileID: 141587699}
   Loading: {fileID: 757342227}
   ErrorUI: {fileID: 2115589386}
+  InputUI: {fileID: 1568592080}
 --- !u!1 &419080362
 GameObject:
   m_ObjectHideFlags: 0
@@ -1514,8 +1515,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0f5675cf18ee6a94691239cb761bb01f, type: 2}
+  m_sharedMaterial: {fileID: 5257566636843172209, guid: 0f5675cf18ee6a94691239cb761bb01f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2046,7 +2047,7 @@ GameObject:
   - component: {fileID: 849132627}
   - component: {fileID: 849132626}
   m_Layer: 5
-  m_Name: InputField (TMP)
+  m_Name: ID_Input
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2152,7 +2153,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 347138071}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
+        m_MethodName: InputChange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2592,7 +2605,7 @@ GameObject:
   - component: {fileID: 950439196}
   - component: {fileID: 950439195}
   m_Layer: 5
-  m_Name: InputField (TMP) (1)
+  m_Name: Password_Input
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2667,8 +2680,8 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 0
-  m_InputType: 0
+  m_ContentType: 7
+  m_InputType: 2
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 0
@@ -2698,7 +2711,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 347138071}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
+        m_MethodName: InputChange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3729,6 +3754,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1568592081}
+  - component: {fileID: 1568592082}
   m_Layer: 5
   m_Name: InputMain
   m_TagString: Untagged
@@ -3760,6 +3786,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -153.64998}
   m_SizeDelta: {x: 332.81, y: 156.9}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &1568592082
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568592080}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1624440533
 GameObject:
   m_ObjectHideFlags: 0
@@ -4884,8 +4922,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0f5675cf18ee6a94691239cb761bb01f, type: 2}
+  m_sharedMaterial: {fileID: 5257566636843172209, guid: 0f5675cf18ee6a94691239cb761bb01f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
