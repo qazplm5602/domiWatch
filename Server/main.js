@@ -5,6 +5,7 @@ global.TriggerEvent = {};
 // 스크륍트
 const UserManager = require("./lib/UserManager.js");
 const LoginSys = require("./scripts/LoginSystem.js");
+require("./scripts/testScript.js");
 
 const server = net.createServer(function(socket) {
     ////////// socket 초기화 //////////
@@ -72,13 +73,13 @@ const server = net.createServer(function(socket) {
         });
         socket.once("close", function() {
             UserManager.RemovePlayer(MyID);
-            console.log(`[main] ${MyID} 나감.`);
         });
         socket.on("error", function(err) {
             // console.error(err);
         });
     }
 
+    // 로그인...
     socket.once("data", async function(data) {
         data = data.replace("|domi\\SLICE\\packet|","");
         let message;
@@ -105,16 +106,10 @@ const server = net.createServer(function(socket) {
             return;
         }
 
-        // 로그인 성공!
-        UserManager.AddPlayer(result.id, result.name, socket);
         // 문을 열어주쟈
         SocketEvent_Init(result.id);
-
-        // 클라에 알려줌
-        socket.send("domiServer.Hello", {
-            id: result.id,
-            name: result.name
-        });
+        // 로그인 성공!
+        UserManager.AddPlayer(result.id, result.name, socket);
     });
 });
 

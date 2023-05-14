@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using DG.Tweening;
 using TMPro;
 using LitJson;
@@ -28,19 +28,25 @@ public class LobbyManager : MonoBehaviour
 
     // 서버 연결 성공여부
     bool isConnect = false;
+    string WhyDisconnect; // 왜 튕겼지..
 
     private void Start() {
         NetworkCore.EventConnect += SuccessConnect;
         NetworkCore.EventDisconnect += ErrorConnect; // 리스너 등록
-        NetworkCore.EventListener["domiServer.Hello"] = HelloDomi;
+        NetworkCore.EventListener["disconnect.why"] = SetWhyDisconnect;
+        NetworkCore.EventListener["Lobby.Init"] = LobbyChange;
         PlayButton.GetComponent<LobbyButton>().SetLock();
 
         ID_Input = InputUI.transform.Find("ID_Input").GetComponent<TMP_InputField>();
         Password_Input = InputUI.transform.Find("Password_Input").GetComponent<TMP_InputField>();
     }
 
-    void HelloDomi(JsonData data) {
-        print($"나는 {data["name"]}이고 아이디는 {data["id"]} 이다!!!!");
+    // 리스너 해제
+    void OnDestroy() {
+        NetworkCore.EventConnect -= SuccessConnect;
+        NetworkCore.EventDisconnect -= ErrorConnect;
+        NetworkCore.EventListener.Remove("disconnect.why");
+        NetworkCore.EventListener.Remove("Lobby.Init");
     }
 
     public void InputChange() {
@@ -69,6 +75,7 @@ public class LobbyManager : MonoBehaviour
         }
 
         isConnect = false;
+        WhyDisconnect = null;
 
         // 로딩..
         Loading.SetActive(true);
@@ -109,6 +116,14 @@ public class LobbyManager : MonoBehaviour
         if (isConnect) {
             Loading.GetComponentInChildren<TextMeshProUGUI>().text = "접속 중...";
         }
-        ErrorUI.transform.Find("Why").GetComponent<TextMeshProUGUI>().text = isConnect ? "연결 도중 끊김" : "TimeOut";
+        ErrorUI.transform.Find("Why").GetComponent<TextMeshProUGUI>().text = isConnect ? WhyDisconnect != null ? WhyDisconnect : "연결 도중 끊김" : "TimeOut";
+    }
+    
+    void SetWhyDisconnect(JsonData why) => WhyDisconnect = (string)why;
+
+    void LobbyChange(JsonData data) {
+        LobbyManager2.MyName = (string)data["name"];
+        LobbyManager2.MyID = (string)data["id"];
+        SceneManager.LoadScene(1);
     }
 }

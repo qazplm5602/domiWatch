@@ -111,7 +111,7 @@ public class NetworkCore : MonoBehaviour
         stream.BeginRead(buffer, 0, buffer.Length, OnRead, null);
 
         // 메인 쓰레드에서 실행 (이 쓰레드에서 유니티 레퍼런스들은 작동안함)
-        _actions.Enqueue(() => EventConnect.Invoke()); // 이벤트 실행
+        _actions.Enqueue(() => EventConnect?.Invoke()); // 이벤트 실행
     }
 
     // [이벤트 리스너] 데이터 읽음 (Server -> Client)
@@ -161,7 +161,7 @@ public class NetworkCore : MonoBehaviour
     // [이벤트 리스너] 서버와 연결끊김
     void OnDisconnect() {
         client = null; // connection 지움
-        EventDisconnect.Invoke(); // 이벤트 실행
+        EventDisconnect?.Invoke(); // 이벤트 실행
     }
 
     ////////////////// 코루틴 //////////////////

@@ -1,12 +1,11 @@
 global.Players = {};
-let GenId = 0;
 
 class Player {
-    nickname = "unknown";
+    name = "unknown";
     socket = undefined;
 
     constructor(_name, _ws) {
-        this.nickname = _name;
+        this.name = _name;
         this.socket = _ws;
     }
 }
@@ -14,9 +13,17 @@ class Player {
 // 플레이어 추가
 exports.AddPlayer = function(id, name, ws) {
     global.Players[String(id)] = new Player(name, ws);
+    // 이벤트
+    const cb = TriggerEvent["system.PlayerJoin"];
+    if (typeof(cb) === "function")
+        cb(String(id));
 }
 
 // 플레이어 삭제 (반환: 없지롱)
 exports.RemovePlayer = function(id) {
+    const cb = TriggerEvent["system.PlayerLeave"];
+    if (typeof(cb) === "function")
+        cb(String(id));
+
     delete global.Players[String(id)];
 }
