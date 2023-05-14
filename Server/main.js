@@ -25,6 +25,31 @@ const server = net.createServer(function(socket) {
 
         socket.write(jsonEncode+"|domi\\SLICE\\packet|");
     }
+    // 추방 메서드
+    socket.kick = function(why) {
+        // 사유 알려주기
+        socket.send("disconnect.why", why);
+        // 연결 끊음
+        socket.destroy();
+    }
+
+    socket.once("data", function(data) {
+        let message;
+        try {
+            message = JSON.parse(data);
+        } catch {}
+
+        if (message === undefined || message.id === undefined || message.password === undefined) {
+            socket.kick("잘못된 로그인 데이터 입니다.");
+            return;
+        }
+
+        console.log(message);
+    });
+
+
+    // 밑에 코드는 아직이지롱
+    if (true) return;
 
     const MyID = UserManager.AddPlayer(null, socket);
     console.log(`[main] ${socket.remoteAddress} ${MyID} 연결.`);
