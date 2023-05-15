@@ -96,6 +96,7 @@ public class NetworkCore : MonoBehaviour
         print("[domi Network] 서버 연결 시도");
         client = new TcpClient();
         buffer = new byte[BufferSize];
+        WhyDisconnect = null;
 
         client.BeginConnect(ServerIP, ServerPort, OnConnect, null);
         StartCoroutine(WaitServerConnect());
@@ -187,13 +188,14 @@ public class NetworkCore : MonoBehaviour
         if (!client.Connected) {
             Debug.LogError("[domi Network] 서버와 연결을 실패하였습니다. (타임아웃)");
             client.Close();
+            WhyDisconnect = "TimeOut";
             OnDisconnect();
         } else /* 서버와 연결끊어짐을 감지함 */ StartCoroutine(DetectDisconnect());
     }
 
     IEnumerator DetectDisconnect() {
         yield return new WaitUntil(() => !client.Connected);
-        Debug.LogError("[domi Network] 서버와 연결이 끊어졌습니다.");
+        Debug.LogError($"[domi Network] 서버와 연결이 끊어졌습니다. ({(WhyDisconnect != null ? WhyDisconnect : "연결 끊김")})");
         OnDisconnect();
     }
 }

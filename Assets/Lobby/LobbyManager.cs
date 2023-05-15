@@ -28,7 +28,6 @@ public class LobbyManager : MonoBehaviour
 
     // 서버 연결 성공여부
     bool isConnect = false;
-    string WhyDisconnect; // 왜 튕겼지..
 
     private void Awake() {
         NetworkCore.EventConnect += SuccessConnect;
@@ -74,7 +73,6 @@ public class LobbyManager : MonoBehaviour
         }
 
         isConnect = false;
-        WhyDisconnect = null;
 
         // 로딩..
         Loading.SetActive(true);
@@ -115,11 +113,9 @@ public class LobbyManager : MonoBehaviour
         if (isConnect) {
             Loading.GetComponentInChildren<TextMeshProUGUI>().text = "접속 중...";
         }
-        ErrorUI.transform.Find("Why").GetComponent<TextMeshProUGUI>().text = isConnect ? WhyDisconnect != null ? WhyDisconnect : "연결 도중 끊김" : "TimeOut";
+        ErrorUI.transform.Find("Why").GetComponent<TextMeshProUGUI>().text = Why == null ? "연결 도중 끊김" : Why;
     }
     
-    void SetWhyDisconnect(JsonData why) => WhyDisconnect = (string)why;
-
     void LobbyChange(JsonData data) {
         LobbyManager2.MyName = (string)data["name"];
         LobbyManager2.MyID = (string)data["id"];
