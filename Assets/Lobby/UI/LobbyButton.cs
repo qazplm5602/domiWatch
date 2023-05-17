@@ -17,14 +17,14 @@ public class LobbyButton : MonoBehaviour
     }
     public void Hover() {
         if (Lock) return;
+        sequence = DOTween.Sequence();
         sequence.Append(transform.DOScale(1.1f, 0.1f));
-        sequence.Kill(true);
     }
 
     public void UnHover() {
         if (Lock) return;
+        sequence = DOTween.Sequence();
         sequence.Append(transform.DOScale(1, 0.1f));
-        sequence.Kill(true);
     }
 
     public void SetLock() {
