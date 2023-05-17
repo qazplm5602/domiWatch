@@ -21,7 +21,7 @@ public class LobbyHeaderButton : MonoBehaviour
             Active(true);
     }
 
-    void Active(bool isShow) {
+    public void Active(bool isShow) {
         // 배경 색깔
         ButtonBackground.enabled = isShow;
 
