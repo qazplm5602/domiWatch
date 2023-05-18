@@ -25,8 +25,8 @@ public class LobbyEnterGame : MonoBehaviour
         loadUI_Trnasform.DOAnchorPosY(0, .3f).SetEase(Ease.OutQuad);
         loadUI.GetComponent<CanvasGroup>().DOFade(1, .3f);
 
-            SceneManager.LoadScene(1);
+            // SceneManager.LoadScene(1);
 
-        // NetworkCore.Send("Room.Join", null);
+        NetworkCore.Send("Room.Join", null);
     }
 }

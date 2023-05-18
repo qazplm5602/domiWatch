@@ -33,10 +33,12 @@ public class LobbyManager : MonoBehaviour
         NetworkCore.EventConnect += SuccessConnect;
         NetworkCore.EventDisconnect += ErrorConnect; // 리스너 등록
         NetworkCore.EventListener["Lobby.Init"] = LobbyChange;
-        PlayButton.GetComponent<LobbyButton>().SetLock();
 
         ID_Input = InputUI.transform.Find("ID_Input").GetComponent<TMP_InputField>();
         Password_Input = InputUI.transform.Find("Password_Input").GetComponent<TMP_InputField>();
+    }
+    private void Start() {
+        PlayButton.GetComponent<LobbyButton>().SetLock();
     }
 
     // 리스너 해제
@@ -119,6 +121,6 @@ public class LobbyManager : MonoBehaviour
     void LobbyChange(JsonData data) {
         LobbyManager2.MyName = (string)data["name"];
         LobbyManager2.MyID = (string)data["id"];
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(2);
     }
 }
