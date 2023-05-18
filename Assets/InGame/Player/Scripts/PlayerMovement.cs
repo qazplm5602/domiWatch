@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInfoData {
+    public string Id = null;
     public double[] Coords = new double[3];
     public double MouseX;
     public double MouseY;

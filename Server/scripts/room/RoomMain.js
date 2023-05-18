@@ -67,6 +67,13 @@ TriggerEvent["Room.RequestPlayerUpdate"] = function(id, data) {
 
     // 이 코드 에서 이제 클라이언트들에게 업데이트가 되었다고 알려주는
     // 코드를 넣을 예정임 ㅅㄷ
+    // Object.keys(RoomPlayers).forEach(PlayerID => {
+    //     const Player = Players[PlayerID];
+    //     Player.socket.send("Room.PlayerUpdate", {
+    //         id: id,
+            
+    //     });
+    // });
 }
 
 setInterval(() => {
