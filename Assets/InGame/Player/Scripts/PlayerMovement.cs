@@ -2,6 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class PlayerInfoData {
+    public double[] Coords = new double[3];
+    public double MouseX;
+    public double MouseY;
+
+    public PlayerInfoData(Vector3 _coord, double x, double y) {
+        Coords[0] = _coord.x;
+        Coords[1] = _coord.y;
+        Coords[2] = _coord.z;
+
+        MouseX = x;
+        MouseY = y;
+    }
+}
+
 public class PlayerMovement : MonoBehaviour
 {
     public float speed;      // 캐릭터 움직임 스피드.
@@ -12,6 +27,12 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController controller; // 현재 캐릭터가 가지고있는 캐릭터 컨트롤러 콜라이더.
     private Vector3 MoveDir;                // 캐릭터의 움직이는 방향.
     private float verticalRotation = 0f;
+
+    // 서버 업데이트 기록
+    Vector3 SaveCoords;
+    float SaveX;
+    float SaveY;
+    
     
     void Start()
     {
@@ -60,5 +81,14 @@ public class PlayerMovement : MonoBehaviour
 
         // Rotate the character horizontally
         transform.Rotate(Vector3.up * mouseX);
+
+        // 바뀌면 업데이트
+        if (SaveX != transform.localEulerAngles.y || SaveY != verticalRotation || SaveCoords != transform.position) {
+            SaveX = transform.localEulerAngles.y;
+            SaveY = verticalRotation;
+            SaveCoords = transform.position;
+            // 동기화 해줭
+            NetworkCore.Send("Room.RequestPlayerUpdate", new PlayerInfoData(SaveCoords, SaveX, SaveY));
+        }
     }
 }

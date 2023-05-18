@@ -4,7 +4,19 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
+    // 이미 리소스 파일에서 불러온것은 저장해야제 (계속 꺼내오면 렉걸리지롱)
+    public static Dictionary<string, GameObject> CachePrefebs = new();
+    public static SpawnManager instance;
     [SerializeField] GameObject CharObject;
+    
+    private void Awake() {
+        if (instance == null) {
+            instance = this;
+        } else {
+            Debug.LogError("SpawnManager 이미 등록되어 있습니다.");
+            Destroy(gameObject);
+        }
+    }
 
     private void Start() {
         // 자기자신 소환일때
@@ -25,4 +37,14 @@ public class SpawnManager : MonoBehaviour
         // 플레이어 움직이는 스크를 넣자
         Player.AddComponent<PlayerMovement>();
     }
+
+    public GameObject SpawnPlayer(string skin) {
+        GameObject Prefebs;
+        if (!CachePrefebs.TryGetValue(skin, out Prefebs)) {
+            // Cache 에 저장과 동시에 프래핍 불러오장
+            CachePrefebs[skin] = Prefebs = Resources.Load("Player/Characters/"+skin) as GameObject;
+        }
+        
+        return Instantiate(Prefebs, Prefebs.transform.position, Quaternion.identity);
+    } 
 }
