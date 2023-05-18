@@ -119,6 +119,6 @@ public class LobbyManager : MonoBehaviour
     void LobbyChange(JsonData data) {
         LobbyManager2.MyName = (string)data["name"];
         LobbyManager2.MyID = (string)data["id"];
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(3);
     }
 }
