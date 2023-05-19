@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 6998367588186965125}
   - component: {fileID: 6998367588186965129}
   - component: {fileID: 6998367588186965134}
+  - component: {fileID: 8362229423782059395}
   m_Layer: 0
   m_Name: MyChar
   m_TagString: Untagged
@@ -166,6 +167,20 @@ MonoBehaviour:
   MaincameraCoords: {x: 0, y: 0.81999993, z: 0.42}
   HandHandler: {fileID: 6998367587831726472}
   MyHandCoords: {x: 0.364, y: -0.26999998, z: -0.013999999}
+--- !u!114 &8362229423782059395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6998367588186965126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e659163798958e242be211bfd4cac519, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 40
+  MoveSpeed: 25
 --- !u!1 &6998367589654449278
 GameObject:
   m_ObjectHideFlags: 0

@@ -82,12 +82,21 @@ public class PlayerMovement : MonoBehaviour
 
         // Rotate the character horizontally
         transform.Rotate(Vector3.up * mouseX);
-
-        // 바뀌면 업데이트
-        if (SaveX != transform.localEulerAngles.y || SaveY != verticalRotation || SaveCoords != transform.position) {
+    }
+    
+    [SerializeField, Range(0, 10f)]
+    float SyncBetween = 2;
+    private void FixedUpdate() {
+        // 트래픽 최적화좀..
+        if (
+            Mathf.Abs(SaveX - transform.localEulerAngles.y) >= SyncBetween
+            || Mathf.Abs(SaveY - verticalRotation) >= SyncBetween
+            || Vector3.Distance(SaveCoords, transform.position) >= .1f
+        ) {
             SaveX = transform.localEulerAngles.y;
             SaveY = verticalRotation;
             SaveCoords = transform.position;
+
             // 동기화 해줭
             NetworkCore.Send("Room.RequestPlayerUpdate", new PlayerInfoData(SaveCoords, SaveX, SaveY));
         }

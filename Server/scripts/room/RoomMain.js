@@ -39,13 +39,13 @@ TriggerEvent["Room.GetAllPlayer"] = function(id) {
 
     for (const PlayerID in RoomPlayers) {
         const Player = RoomPlayers[PlayerID];
-        // if (id !== PlayerID) { (테스트로 일단 비활)
+        if (id !== PlayerID) { // (테스트로 일단 비활)
             SendPlayers.push({
                 id: PlayerID,
                 coords: Player.coords,
                 rotate: Player.rotate
             });
-        // }
+        }
     }
 
     Player.socket.send("Room.ResultAllPlayer", SendPlayers);
@@ -66,7 +66,7 @@ TriggerEvent["Room.RequestPlayerUpdate"] = function(id, data) {
     console.log("업데이트!!!");
 
     Object.keys(RoomPlayers).forEach(PlayerID => {
-        // if (id === PlayerID) return; // 자기자신은 보내지 않음 (테스트로 비활)
+        if (id === PlayerID) return; // 자기자신은 보내지 않음 (테스트로 비활)
 
         const Player = Players[PlayerID];
         Player.socket.send("Room.PlayerUpdate", {

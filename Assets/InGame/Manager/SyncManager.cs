@@ -48,15 +48,10 @@ public class SyncManager : MonoBehaviour
         if (!PlayerEntity.TryGetValue(PlayerData.id, out var Entity)) // 없음ㄴ 나가
             return;
 
-        PlayerInfo EntityInfo = Entity.GetComponent<PlayerInfo>();
-        Entity.transform.position = new Vector3((float)PlayerData.coords[0], (float)PlayerData.coords[1], (float)PlayerData.coords[2]) + Vector3.left * 2.5f;
-
-        Vector3 CacheEuler = Entity.transform.localEulerAngles;
-        CacheEuler.y = (float)PlayerData.rotate[1];
-        Entity.transform.localEulerAngles = CacheEuler;
-
-        CacheEuler = EntityInfo.HandHandler.transform.localEulerAngles;
-        CacheEuler.x = (float)PlayerData.rotate[0];
-        EntityInfo.HandHandler.transform.localEulerAngles = CacheEuler;
+        // 얘가 부드럽게 해준다고 시킬꺼
+        PlayerSyncMove EntityMove = Entity.GetComponent<PlayerSyncMove>();
+        EntityMove.LastCoords = new Vector3((float)PlayerData.coords[0], (float)PlayerData.coords[1], (float)PlayerData.coords[2]) + Vector3.left * 2.5f;
+        EntityMove.LastMouseX = (float)PlayerData.rotate[1];
+        EntityMove.LastMouseY = (float)PlayerData.rotate[0];
     }
 }
