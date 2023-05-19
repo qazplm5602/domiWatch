@@ -150,17 +150,16 @@ public class NetworkCore : MonoBehaviour
                 } else { // 데이터 정상!
                     JsonData DataDecode = JsonMapper.ToObject(MessageData);
 
-                    // 메인 쓰레드에서 실행 (이 쓰레드에서 유니티 레퍼런스들은 작동안함)
                     UnityAction<JsonData> CallBack;
                     if (!EventListener.TryGetValue((string)DataDecode["type"], out CallBack)){
                         Debug.LogError($"[domi Network] {DataDecode["type"]} Trigger는 찾을 수 없습니다.");
-                        return;
+                    } else {
+                        if ((string)DataDecode["type"] != "Room.PlayerUpdate")
+                            // 메인 쓰레드에서 실행 (이 쓰레드에서 유니티 레퍼런스들은 작동안함)
+                            _actions.Enqueue(() => CallBack.Invoke(DataDecode["data"]));
+                        else
+                            SaveUpdatePlayer[(string)DataDecode["data"]["id"]] = DataDecode["data"];
                     }
-
-                    if ((string)DataDecode["type"] != "Room.PlayerUpdate")
-                        _actions.Enqueue(() => CallBack.Invoke(DataDecode["data"]));
-                    else
-                        SaveUpdatePlayer[(string)DataDecode["data"]["id"]] = DataDecode["data"];
                 }
         }
 
