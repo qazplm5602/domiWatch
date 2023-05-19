@@ -16,11 +16,13 @@ public class SyncManager : MonoBehaviour
     private void Awake() {
         PlayerEntity = new();
         NetworkCore.EventListener["Room.ResultAllPlayer"] = AllPlayerSync;
+        NetworkCore.EventListener["Room.PlayerUpdate"] = ResultPlayerUpdate;
     }
 
     private void OnDestroy() {
         PlayerEntity = null;
         NetworkCore.EventListener.Remove("Room.ResultAllPlayer");
+        NetworkCore.EventListener.Remove("Room.PlayerUpdate");
     }
 
     void Start()
@@ -38,5 +40,23 @@ public class SyncManager : MonoBehaviour
             PlayerObj.name = "Player-"+PlayerData.id;
             PlayerEntity[PlayerData.id] = PlayerObj;
         }
+    }
+
+    // 서버에서 플레이어 좌표를 업뎃 해달라고 요청했지롱
+    void ResultPlayerUpdate(JsonData data) {
+        AllPlayerPacket PlayerData = JsonMapper.ToObject<AllPlayerPacket>(data.ToJson());
+        if (!PlayerEntity.TryGetValue(PlayerData.id, out var Entity)) // 없음ㄴ 나가
+            return;
+
+        PlayerInfo EntityInfo = Entity.GetComponent<PlayerInfo>();
+        Entity.transform.position = new Vector3((float)PlayerData.coords[0], (float)PlayerData.coords[1], (float)PlayerData.coords[2]) + Vector3.left * 2.5f;
+
+        Vector3 CacheEuler = Entity.transform.localEulerAngles;
+        CacheEuler.y = (float)PlayerData.rotate[1];
+        Entity.transform.localEulerAngles = CacheEuler;
+
+        CacheEuler = EntityInfo.HandHandler.transform.localEulerAngles;
+        CacheEuler.x = (float)PlayerData.rotate[0];
+        EntityInfo.HandHandler.transform.localEulerAngles = CacheEuler;
     }
 }
