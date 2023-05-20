@@ -39,7 +39,7 @@ public class SyncManager : MonoBehaviour
         foreach (var PlayerData in PlayersData)
         {
             // 플레이어 생성
-            GameObject PlayerObj = SpawnManager.instance.SpawnPlayer("MyChar");
+            GameObject PlayerObj = SpawnManager.instance.SpawnPlayer("VanguardChoonyung");
             PlayerObj.name = "Player-"+PlayerData.id;
             PlayerEntity[PlayerData.id] = PlayerObj;
 
@@ -47,14 +47,14 @@ public class SyncManager : MonoBehaviour
             PlayerSyncMove EntityMove = PlayerObj.GetComponent<PlayerSyncMove>();
             EntityMove.LastCoords = new Vector3((float)PlayerData.coords[0], (float)PlayerData.coords[1], (float)PlayerData.coords[2]);
             EntityMove.LastMouseX = (float)PlayerData.rotate[1];
-            EntityMove.LastMouseY = (float)PlayerData.rotate[0];
+            // EntityMove.LastMouseY = (float)PlayerData.rotate[0];
         }
     }
 
     // 서버에서 플레이어 추가해달라고 함
     void PlayerAdd(JsonData id) {
         print(id);
-        GameObject PlayerObj = SpawnManager.instance.SpawnPlayer("MyChar");
+        GameObject PlayerObj = SpawnManager.instance.SpawnPlayer("VanguardChoonyung");
         PlayerObj.name = "Player-"+(string)id;
         PlayerEntity[(string)id] = PlayerObj;
     }
@@ -69,6 +69,6 @@ public class SyncManager : MonoBehaviour
         PlayerSyncMove EntityMove = Entity.GetComponent<PlayerSyncMove>();
         EntityMove.LastCoords = new Vector3((float)PlayerData.coords[0], (float)PlayerData.coords[1], (float)PlayerData.coords[2]);
         EntityMove.LastMouseX = (float)PlayerData.rotate[1];
-        EntityMove.LastMouseY = (float)PlayerData.rotate[0];
+        // EntityMove.LastMouseY = (float)PlayerData.rotate[0];
     }
 }

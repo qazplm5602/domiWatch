@@ -29,10 +29,10 @@ public class SpawnManager : MonoBehaviour
         // 카메라 위치 수정
         Camera.main.transform.localPosition = Player_Info.MaincameraCoords;
         
-        // 카메라 안에 손 넣깅
-        Player_Info.HandHandler.transform.parent = Camera.main.transform;
-        // 손 좌표를 수정하자
-        Player_Info.HandHandler.transform.localPosition = Player_Info.MyHandCoords;
+        // // 카메라 안에 손 넣깅
+        // Player_Info.HandHandler.transform.parent = Camera.main.transform;
+        // // 손 좌표를 수정하자
+        // Player_Info.HandHandler.transform.localPosition = Player_Info.MyHandCoords;
 
         // 플레이어 움직이는 스크를 넣자
         Player.AddComponent<PlayerMovement>();
