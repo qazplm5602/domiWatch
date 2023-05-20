@@ -8,12 +8,14 @@ public class domiWeapon {
     public GameObject Model;
     public Sprite Image;
     public int MaxAmmo;
-    public int ReloadDelay;
+    public float FireDelay; // 총 빵빵 대기시간
+    public float ReloadDelay; // 총 재장전 대기시간
     public KeyCode SlotKey;
     public AudioClip ShotSound;
     
     // 진짜 쓸꺼
     int Ammo;
+    [HideInInspector] public float FireTime; // 총을 쏜 시간
 
     [HideInInspector] // 혹시 모르니까 해야징
     public int ammo {
@@ -29,6 +31,11 @@ public class WeaponManager : MonoBehaviour
 {
     int CurrentWeaponID; // 들고있는거
     [SerializeField] domiWeapon[] Weapons;
+
+    private void Awake() {
+
+    }
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -51,12 +58,21 @@ public class WeaponManager : MonoBehaviour
                 }
             }
         }
+
+        var SelectWeapon = Weapons[CurrentWeaponID];
+        // 총 쏘기
+        if (Input.GetMouseButton(0) && (Time.time - SelectWeapon.FireTime) /* 총 쏜 시간으로부터 얼마나 지남 */ > SelectWeapon.FireDelay) {
+            SelectWeapon.FireTime = Time.time;
+
+            print("fire!!!");
+        }
     }
 
     void UpdateWeapon(GameObject Hand, domiWeapon Weapon) {
         print("update!");
         Destroy(Hand.transform.GetChild(0).gameObject); // 총 삭제
         
+        // 총 소환
         GameObject WeaponEntity = Instantiate(Weapon.Model, Vector3.zero, Quaternion.identity, Hand.transform);
         WeaponEntity.transform.localPosition = Vector3.zero;
         WeaponEntity.transform.localEulerAngles = Vector3.zero;
