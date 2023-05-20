@@ -38,6 +38,6 @@ TriggerEvent["Room.Join"] = function(id) {
     }
 }
 
-setInterval(() => {
-    console.log(global.RoomPlayers);
-}, 1000);
+// setInterval(() => {
+//     console.log(global.RoomPlayers);
+// }, 1000);
