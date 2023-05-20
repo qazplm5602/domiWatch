@@ -3,7 +3,6 @@ global.RoomPlayers = {};
 class RoomInterface {
     coords = [0,0,0];
     rotate = [90, -13.35];
-    ready = false;
 }
 
 require("./RoomSync.js");

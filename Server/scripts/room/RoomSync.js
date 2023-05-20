@@ -18,8 +18,6 @@ TriggerEvent["Room.GetAllPlayer"] = function(id) {
     }
 
     Player.socket.send("Room.ResultAllPlayer", SendPlayers);
-
-    Players[id].ready = true;
 }
 
 
