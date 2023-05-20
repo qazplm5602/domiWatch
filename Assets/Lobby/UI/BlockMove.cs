@@ -8,6 +8,8 @@ public class BlockMove : MonoBehaviour
 {
     RectTransform _trnasform;
     RawImage _image;
+    Sequence[] sequence = new Sequence[3];
+
     private void Awake() {
         _trnasform = GetComponent<RectTransform>();
         _image = GetComponent<RawImage>();
@@ -20,24 +22,34 @@ public class BlockMove : MonoBehaviour
         Fade();
     }
 
+    private void OnDestroy() {
+        foreach (var _sequence in sequence)
+            _sequence?.Kill();
+    }
+
     void Fade() {
-        _image.DOFade(Random.Range(0.1f, 0.8f), Random.Range(3, 8)).OnComplete(Fade);
+        sequence[0] = DOTween.Sequence();
+        sequence[0].Append(_image.DOFade(Random.Range(0.1f, 0.8f), Random.Range(3, 8)).OnComplete(Fade));
     }
 
     void SizeSmall() {
+        sequence[1] = DOTween.Sequence();
         float Small = Random.Range(0.2f, _trnasform.localScale.x);
-        _trnasform.DOScale(new Vector2(Small,Small), Random.Range(1, 5)).OnComplete(SizeBig);
+        sequence[1].Append(_trnasform.DOScale(new Vector2(Small,Small), Random.Range(1, 5)).OnComplete(SizeBig));
     }
 
     void SizeBig() {
+        sequence[1] = DOTween.Sequence();
         float Biiig = Random.Range(_trnasform.localScale.x, 2f);
-        _trnasform.DOScale(new Vector2(Biiig,Biiig), Random.Range(1, 5)).OnComplete(SizeSmall);
+        sequence[1].Append(_trnasform.DOScale(new Vector2(Biiig,Biiig), Random.Range(1, 5)).OnComplete(SizeSmall));
     }
 
     void Move() {
-        _trnasform.DOAnchorPosX(1070, Random.Range(5, 30)).SetEase(Ease.OutQuad).OnComplete(MoveBack);
+        sequence[2] = DOTween.Sequence();
+        sequence[2].Append(_trnasform.DOAnchorPosX(1070, Random.Range(5, 30)).SetEase(Ease.OutQuad).OnComplete(MoveBack));
     }
     void MoveBack() {
-        _trnasform.DOAnchorPosX(-1550, Random.Range(5, 30)).SetEase(Ease.InQuad).OnComplete(Move);
+        sequence[2] = DOTween.Sequence();
+        sequence[2].Append(_trnasform.DOAnchorPosX(-1550, Random.Range(5, 30)).SetEase(Ease.InQuad).OnComplete(Move));
     }
 }
