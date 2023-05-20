@@ -1468,6 +1468,7 @@ GameObject:
   - component: {fileID: 880374866}
   - component: {fileID: 880374867}
   - component: {fileID: 880374868}
+  - component: {fileID: 880374869}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1515,6 +1516,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c060a8e87ed40a441bd2182e926aeea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &880374869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880374865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 150601013b141b4458c66fee460136fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Weapons:
+  - Model: {fileID: 8701951577818738156, guid: 9affa3671b8eb8644b85ec19d9a7fb5f, type: 3}
+    Image: {fileID: 21300000, guid: 11173d705a226c54386255db63868e48, type: 3}
+    MaxAmmo: 5
+    ReloadDelay: 3
+    SlotKey: 49
+    ShotSound: {fileID: 0}
+  - Model: {fileID: 4050061298882219018, guid: 184794cefbeed96439ae5e552ba91d23, type: 3}
+    Image: {fileID: 21300000, guid: 11173d705a226c54386255db63868e48, type: 3}
+    MaxAmmo: 5
+    ReloadDelay: 3
+    SlotKey: 50
+    ShotSound: {fileID: 0}
 --- !u!1 &912191170
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class SpawnManager : MonoBehaviour
     public static Dictionary<string, GameObject> CachePrefebs = new();
     public static SpawnManager instance;
     [SerializeField] GameObject CharObject;
+    public GameObject MyEntity {get; private set;}
     
     private void Awake() {
         if (instance == null) {
@@ -20,7 +21,7 @@ public class SpawnManager : MonoBehaviour
 
     private void Start() {
         // 자기자신 소환일때
-        GameObject Player = Instantiate(CharObject, Vector3.zero + CharObject.transform.position, Quaternion.identity);
+        GameObject Player = MyEntity = Instantiate(CharObject, Vector3.zero + CharObject.transform.position, Quaternion.identity);
 
         PlayerInfo Player_Info = Player.GetComponent<PlayerInfo>();
 
