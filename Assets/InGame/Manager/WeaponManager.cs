@@ -29,13 +29,33 @@ public class domiWeapon {
     }
 }
 
+public class domiWeaponChangePacket {
+    public string id;
+    public int WeaponID;
+}
+public class domiWeaponPacket {
+    public int WeaponID;
+    public double[] StartPos;
+    public double[] DirectionPos;
+
+    public domiWeaponPacket(int _WeaponID, Vector3 _start, Vector3 direction) {
+        WeaponID = _WeaponID;
+        StartPos = new double[] {_start.x, _start.y, _start.z};
+        DirectionPos = new double[] {direction.x, direction.y, direction.z};
+    }
+}
+
 public class WeaponManager : MonoBehaviour
 {
     int CurrentWeaponID; // 들고있는거
     [SerializeField] domiWeapon[] Weapons;
 
     private void Awake() {
+        NetworkCore.EventListener["Room.PlayerWeaponChange"] = PlayerChangeWeapon;
+    }
 
+    private void OnDestroy() {
+        NetworkCore.EventListener.Remove("Room.PlayerWeaponChange");
     }
     
     // Start is called before the first frame update
@@ -74,10 +94,11 @@ public class WeaponManager : MonoBehaviour
         if (Input.GetMouseButton(0) && (Time.time - SelectWeapon.FireTime) /* 총 쏜 시간으로부터 얼마나 지남 */ > SelectWeapon.FireDelay) {
             SelectWeapon.FireTime = Time.time;
 
-            // print(SelectWeapon.ShotCoords.position);
-            CreateBullet(SelectWeapon, null, SelectWeapon.ShotCoords.position, ShotDirectionPos());
+            Vector3 Direcrtion = ShotDirectionPos();
+            CreateBullet(SelectWeapon, null, SelectWeapon.ShotCoords.position, Direcrtion);
 
-            print("fire!!!");
+            // 서버한테 알리기
+            NetworkCore.Send("Room.BulletCreate", new domiWeaponPacket(CurrentWeaponID, SelectWeapon.ShotCoords.position, Direcrtion));
         }
     }
 
@@ -107,6 +128,9 @@ public class WeaponManager : MonoBehaviour
         // 자기 자신
         GameObject WeaponObject = UpdateWeapon(SpawnManager.instance.MyEntity.GetComponent<PlayerInfo>().HandHandler, Weapon);
         Weapon.ShotCoords = WeaponObject.transform.Find("ShotPos"); // 쏘는 좌표
+        
+        // 서버에서도 바꿔야징
+        NetworkCore.Send("Room.WeaponChange", ID);
     }
 
     GameObject UpdateWeapon(GameObject Hand, domiWeapon Weapon) {
@@ -121,5 +145,12 @@ public class WeaponManager : MonoBehaviour
         WeaponEntity.transform.localEulerAngles = Vector3.zero;
 
         return WeaponEntity;
+    }
+
+    void PlayerChangeWeapon(LitJson.JsonData data) {
+        var domi = LitJson.JsonMapper.ToObject<domiWeaponChangePacket>(data.ToJson());
+        if (!SyncManager.PlayerEntity.TryGetValue(domi.id, out var PlayerEntity)) return;
+
+        UpdateWeapon(PlayerEntity.GetComponent<PlayerInfo>().HandHandler, Weapons[domi.WeaponID]);
     }
 }

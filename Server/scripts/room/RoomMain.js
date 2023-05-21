@@ -3,9 +3,11 @@ global.RoomPlayers = {};
 class RoomInterface {
     coords = [0,0,0];
     rotate = [90, -13.35];
+    Weapon = 0;
 }
 
 require("./RoomSync.js");
+require("./RoomWeapon.js");
 
 // global.RoomPlayers["qazplm5602"] = {
 //     coords: [0,0,0],
