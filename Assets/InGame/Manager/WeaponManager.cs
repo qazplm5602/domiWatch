@@ -47,11 +47,14 @@ public class domiWeaponPacket {
 
 public class WeaponManager : MonoBehaviour
 {
+    public static WeaponManager instance;
+    
     int CurrentWeaponID; // 들고있는거
     [SerializeField] domiWeapon[] Weapons;
 
     private void Awake() {
         NetworkCore.EventListener["Room.PlayerWeaponChange"] = PlayerChangeWeapon;
+        if (instance == null) instance = this;
     }
 
     private void OnDestroy() {
@@ -152,5 +155,10 @@ public class WeaponManager : MonoBehaviour
         if (!SyncManager.PlayerEntity.TryGetValue(domi.id, out var PlayerEntity)) return;
 
         UpdateWeapon(PlayerEntity.GetComponent<PlayerInfo>().HandHandler, Weapons[domi.WeaponID]);
+    }
+    // 구냥
+    public void PlayerChangeWeapon(string id, int WeaponID) {
+        if (!SyncManager.PlayerEntity.TryGetValue(id, out var PlayerEntity)) return;
+        UpdateWeapon(PlayerEntity.GetComponent<PlayerInfo>().HandHandler, Weapons[WeaponID]);
     }
 }

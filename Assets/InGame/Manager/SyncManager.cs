@@ -7,6 +7,7 @@ public class AllPlayerPacket {
     public string id;
     public double[] coords = new double[3];
     public double[] rotate = new double[2];
+    public int weapon;
 }
 
 public class SyncManager : MonoBehaviour
@@ -48,6 +49,9 @@ public class SyncManager : MonoBehaviour
             EntityMove.LastCoords = new Vector3((float)PlayerData.coords[0], (float)PlayerData.coords[1], (float)PlayerData.coords[2]);
             EntityMove.LastMouseX = (float)PlayerData.rotate[1];
             // EntityMove.LastMouseY = (float)PlayerData.rotate[0];
+
+            // 총 동기화
+            WeaponManager.instance.PlayerChangeWeapon(PlayerData.id, PlayerData.weapon);
         }
     }
 

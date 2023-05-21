@@ -12,7 +12,8 @@ TriggerEvent["Room.GetAllPlayer"] = function(id) {
             SendPlayers.push({
                 id: PlayerID,
                 coords: Player.coords,
-                rotate: Player.rotate
+                rotate: Player.rotate,
+                weapon: Player.Weapon
             });
         }
     }
