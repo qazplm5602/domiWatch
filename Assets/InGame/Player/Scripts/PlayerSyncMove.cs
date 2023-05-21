@@ -11,6 +11,8 @@ public class PlayerSyncMove : MonoBehaviour
     Vector3 CacheEuler;
     PlayerInfo EntityInfo;
     Animator anim;
+    bool isWalk = false;
+    float WalkDisable;
 
     [SerializeField, Tooltip("팔이 회전할때 클수록 더 부드러워짐")]
     float rotationSpeed = 40f; // 회전 속도
@@ -41,9 +43,14 @@ public class PlayerSyncMove : MonoBehaviour
         if (LastCoords != null) {
             transform.position = Vector3.Lerp(transform.position, LastCoords.Value, Time.deltaTime * MoveSpeed);
 
-            bool isWalk = false;
-            if (Mathf.Abs(transform.position.x - LastCoords.Value.x) > 0.05f || Mathf.Abs(transform.position.z - LastCoords.Value.z) > 0.05f )
-                isWalk = true;
+            bool isPlayerMove = Mathf.Abs(transform.position.x - LastCoords.Value.x) > 0.05f || Mathf.Abs(transform.position.z - LastCoords.Value.z) > 0.05f;
+
+            if (isWalk && isPlayerMove) {
+                WalkDisable = Time.time;
+            } else if (!isWalk && isPlayerMove) isWalk = true;
+            else if (isWalk && !isPlayerMove && (Time.time - WalkDisable) >= 0.1f) {
+                isWalk = false;
+            }
 
             anim.SetBool("isWalk", isWalk); // 이동할 좌표랑 현재랑 거리
         }
