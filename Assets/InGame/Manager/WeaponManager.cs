@@ -6,6 +6,7 @@ using UnityEngine;
 public class domiWeapon {
     // 설정 관련
     public GameObject Model;
+    public GameObject BulletModel;
     public Sprite Image;
     public int MaxAmmo;
     public float FireDelay; // 총 빵빵 대기시간
@@ -16,6 +17,7 @@ public class domiWeapon {
     // 진짜 쓸꺼
     int Ammo;
     [HideInInspector] public float FireTime; // 총을 쏜 시간
+    [HideInInspector] public Transform ShotCoords;
 
     [HideInInspector] // 혹시 모르니까 해야징
     public int ammo {
@@ -39,7 +41,16 @@ public class WeaponManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // 커서 정중앙에 있어야하지롱
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false; // 커서 숨김
+
+        // 총알 꽉꽉 채울랭
+        foreach (var weapon in Weapons)
+            weapon.ammo = weapon.MaxAmmo;
         
+        // 총 초기화
+        ChangeMyWeapon(0);
     }
 
     // Update is called once per frame
@@ -51,9 +62,8 @@ public class WeaponManager : MonoBehaviour
 
             if (Input.GetKeyDown(Weapon.SlotKey)) {
                 if (CurrentWeaponID != i) {
-                    CurrentWeaponID = i;
                     // 자기 자신
-                    UpdateWeapon(SpawnManager.instance.MyEntity.GetComponent<PlayerInfo>().HandHandler, Weapon);
+                    ChangeMyWeapon(i);
                     break;
                 }
             }
@@ -64,17 +74,52 @@ public class WeaponManager : MonoBehaviour
         if (Input.GetMouseButton(0) && (Time.time - SelectWeapon.FireTime) /* 총 쏜 시간으로부터 얼마나 지남 */ > SelectWeapon.FireDelay) {
             SelectWeapon.FireTime = Time.time;
 
+            // print(SelectWeapon.ShotCoords.position);
+            CreateBullet(SelectWeapon, null, SelectWeapon.ShotCoords.position, ShotDirectionPos());
+
             print("fire!!!");
         }
     }
 
-    void UpdateWeapon(GameObject Hand, domiWeapon Weapon) {
+    Vector3 ShotDirectionPos() {
+        var Weapon = Weapons[CurrentWeaponID];
+
+        var dir = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
+        var ray = new Ray(Weapon.ShotCoords.position, dir);
+        
+        return ray.direction;
+    }
+
+    void CreateBullet(domiWeapon weapon, string AttackID, Vector3 startPos, Vector3 direction) {
+        GameObject Bullet = Instantiate(weapon.BulletModel, startPos, Quaternion.identity);
+        Bullet.tag = "Bullet"; // 태그 지정
+        BulletSys Bullet_System = Bullet.AddComponent<BulletSys>();
+
+        // 이 총알을 만든 사람
+        Bullet_System.CreatePlayer = AttackID;
+        // 어디로 날라가는지
+        Bullet_System.Direction = direction;
+    }
+
+    void ChangeMyWeapon(int ID) {
+        var Weapon = Weapons[ID];
+        CurrentWeaponID = ID;
+        // 자기 자신
+        GameObject WeaponObject = UpdateWeapon(SpawnManager.instance.MyEntity.GetComponent<PlayerInfo>().HandHandler, Weapon);
+        Weapon.ShotCoords = WeaponObject.transform.Find("ShotPos"); // 쏘는 좌표
+    }
+
+    GameObject UpdateWeapon(GameObject Hand, domiWeapon Weapon) {
         print("update!");
-        Destroy(Hand.transform.GetChild(0).gameObject); // 총 삭제
+        Transform GetWeapon = Hand.transform.GetChild(0);
+        if (GetWeapon)
+            Destroy(GetWeapon.gameObject); // 총 삭제
         
         // 총 소환
         GameObject WeaponEntity = Instantiate(Weapon.Model, Vector3.zero, Quaternion.identity, Hand.transform);
         WeaponEntity.transform.localPosition = Vector3.zero;
         WeaponEntity.transform.localEulerAngles = Vector3.zero;
+
+        return WeaponEntity;
     }
 }
