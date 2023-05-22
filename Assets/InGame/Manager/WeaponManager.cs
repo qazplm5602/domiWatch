@@ -44,6 +44,12 @@ public class domiWeaponPacket {
         DirectionPos = new double[] {direction.x, direction.y, direction.z};
     }
 }
+public class domiWeaponPacketResult {
+    public string AttackID;
+    public int WeaponID;
+    public double[] StartPos;
+    public double[] DirectionPos;
+}
 
 public class WeaponManager : MonoBehaviour
 {
@@ -54,11 +60,13 @@ public class WeaponManager : MonoBehaviour
 
     private void Awake() {
         NetworkCore.EventListener["Room.PlayerWeaponChange"] = PlayerChangeWeapon;
+        NetworkCore.EventListener["Room.PlayerFireWeapon"] = PlayerFireWeapon;
         if (instance == null) instance = this;
     }
 
     private void OnDestroy() {
         NetworkCore.EventListener.Remove("Room.PlayerWeaponChange");
+        NetworkCore.EventListener.Remove("Room.PlayerFireWeapon");
     }
     
     // Start is called before the first frame update
@@ -160,5 +168,17 @@ public class WeaponManager : MonoBehaviour
     public void PlayerChangeWeapon(string id, int WeaponID) {
         if (!SyncManager.PlayerEntity.TryGetValue(id, out var PlayerEntity)) return;
         UpdateWeapon(PlayerEntity.GetComponent<PlayerInfo>().HandHandler, Weapons[WeaponID]);
+    }
+
+    // 총쏨
+    void PlayerFireWeapon(LitJson.JsonData data) {
+        var domi = LitJson.JsonMapper.ToObject<domiWeaponPacketResult>(data.ToJson());
+
+        CreateBullet(
+            Weapons[domi.WeaponID],
+            domi.AttackID,
+            new Vector3((float)domi.StartPos[0], (float)domi.StartPos[1], (float)domi.StartPos[2]),
+            new Vector3((float)domi.DirectionPos[0], (float)domi.DirectionPos[1], (float)domi.DirectionPos[2])
+        );
     }
 }
