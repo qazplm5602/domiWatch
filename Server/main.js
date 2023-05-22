@@ -66,8 +66,8 @@ const server = net.createServer(function(socket) {
                             } else {
                                 console.error(`[main] ${MyID} 잘못된 정보를 전송함.`);
                             }
-                        } catch {
-                            console.error(`[main] ${MyID} JSON 데이터 형식이 아님.\n${message}`);
+                        } catch (err) {
+                            console.error(`[main] ${MyID} 데이터 파싱 오류. ${err}\n${message}`);
                         }
                     }
             }
