@@ -22,6 +22,7 @@ public class SpawnManager : MonoBehaviour
     private void Start() {
         // 자기자신 소환일때
         GameObject Player = MyEntity = Instantiate(CharObject, Vector3.zero + CharObject.transform.position, Quaternion.identity);
+        Player.tag = "Player";
 
         PlayerInfo Player_Info = Player.GetComponent<PlayerInfo>();
 

@@ -56,6 +56,7 @@ public class WeaponManager : MonoBehaviour
     public static WeaponManager instance;
     
     int CurrentWeaponID; // 들고있는거
+    [SerializeField, Tooltip("피 튀기는 이펙")] GameObject BloodEffect;
     [SerializeField] domiWeapon[] Weapons;
 
     private void Awake() {
@@ -129,6 +130,8 @@ public class WeaponManager : MonoBehaviour
 
         // 이 총알을 만든 사람
         Bullet_System.CreatePlayer = AttackID;
+        // 피 튀기는 옵젝
+        Bullet_System.BloodPrefeb = BloodEffect;
         // 어디로 날라가는지
         Bullet_System.Direction = direction;
     }

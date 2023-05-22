@@ -1675,6 +1675,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 150601013b141b4458c66fee460136fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BloodEffect: {fileID: 1000013355911406, guid: eb58e4ac1ffd8c94fa524c70b8475e40, type: 3}
   Weapons:
   - Model: {fileID: 8701951577818738156, guid: 9affa3671b8eb8644b85ec19d9a7fb5f, type: 3}
     BulletModel: {fileID: 8428483630703208537, guid: c0d1c79106620cf4e9ddadc6d108caee, type: 3}

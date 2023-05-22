@@ -41,6 +41,7 @@ public class SyncManager : MonoBehaviour
         {
             // 플레이어 생성
             GameObject PlayerObj = SpawnManager.instance.SpawnPlayer("VanguardChoonyung");
+            PlayerObj.tag = "Player";
             PlayerObj.name = "Player-"+PlayerData.id;
             PlayerEntity[PlayerData.id] = PlayerObj;
 
@@ -59,6 +60,7 @@ public class SyncManager : MonoBehaviour
     void PlayerAdd(JsonData id) {
         print(id);
         GameObject PlayerObj = SpawnManager.instance.SpawnPlayer("VanguardChoonyung");
+        PlayerObj.tag = "Player";
         PlayerObj.name = "Player-"+(string)id;
         PlayerEntity[(string)id] = PlayerObj;
     }
