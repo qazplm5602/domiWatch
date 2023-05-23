@@ -1676,18 +1676,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BloodEffect: {fileID: 1000013355911406, guid: eb58e4ac1ffd8c94fa524c70b8475e40, type: 3}
+  MaxWeaponAmmo: {fileID: 60393132}
+  CurrnetWeaponAmmo: {fileID: 734337710}
   Weapons:
   - Model: {fileID: 8701951577818738156, guid: 9affa3671b8eb8644b85ec19d9a7fb5f, type: 3}
     BulletModel: {fileID: 8428483630703208537, guid: c0d1c79106620cf4e9ddadc6d108caee, type: 3}
     Image: {fileID: 21300000, guid: 11173d705a226c54386255db63868e48, type: 3}
-    MaxAmmo: 5
+    MaxAmmo: 50
     FireDelay: 1
     ReloadDelay: 3
     SlotKey: 49
     ShotSound: {fileID: 0}
     FireTime: 0
     ShotCoords: {fileID: 0}
-  - Model: {fileID: 4050061298882219018, guid: 184794cefbeed96439ae5e552ba91d23, type: 3}
+  - Model: {fileID: 4050061298882219018, guid: 02b11b76c5513094b986c3bbaa4522db, type: 3}
     BulletModel: {fileID: 8428483630703208537, guid: c0d1c79106620cf4e9ddadc6d108caee, type: 3}
     Image: {fileID: 21300000, guid: 11173d705a226c54386255db63868e48, type: 3}
     MaxAmmo: 5

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 [System.Serializable]
 public class domiWeapon {
@@ -57,7 +58,14 @@ public class WeaponManager : MonoBehaviour
     
     int CurrentWeaponID; // 들고있는거
     [SerializeField, Tooltip("피 튀기는 이펙")] GameObject BloodEffect;
-    [SerializeField] domiWeapon[] Weapons;
+    [Header("UI")]
+    [SerializeField] TextMeshProUGUI MaxWeaponAmmo;
+    [SerializeField] TextMeshProUGUI CurrnetWeaponAmmo;
+    
+    [SerializeField, Header("무기 설정")] domiWeapon[] Weapons;
+
+    // 재장전
+    IEnumerator ReloadThread;
 
     private void Awake() {
         NetworkCore.EventListener["Room.PlayerWeaponChange"] = PlayerChangeWeapon;
@@ -103,14 +111,27 @@ public class WeaponManager : MonoBehaviour
 
         var SelectWeapon = Weapons[CurrentWeaponID];
         // 총 쏘기
-        if (Input.GetMouseButton(0) && (Time.time - SelectWeapon.FireTime) /* 총 쏜 시간으로부터 얼마나 지남 */ > SelectWeapon.FireDelay) {
+        if (Input.GetMouseButton(0) && (Time.time - SelectWeapon.FireTime) /* 총 쏜 시간으로부터 얼마나 지남 */ > SelectWeapon.FireDelay && ReloadThread == null /* 재장전중이 아님 */) {
+            if (SelectWeapon.ammo <= 0) { // 총알이 없넹
+                ReloadThread = WeaponReload(SelectWeapon);
+                StartCoroutine(ReloadThread);
+                return;
+            }
             SelectWeapon.FireTime = Time.time;
 
             Vector3 Direcrtion = ShotDirectionPos();
             CreateBullet(SelectWeapon, null, SelectWeapon.ShotCoords.position, Direcrtion);
 
+            // 총알 소모
+            SelectWeapon.ammo --;
+            CurrnetWeaponAmmo.text = SelectWeapon.ammo.ToString();
+
             // 서버한테 알리기
             NetworkCore.Send("Room.BulletCreate", new domiWeaponPacket(CurrentWeaponID, SelectWeapon.ShotCoords.position, Direcrtion));
+        }
+        if (Input.GetKeyDown(KeyCode.R) && ReloadThread == null) {
+            ReloadThread = WeaponReload(SelectWeapon);
+            StartCoroutine(ReloadThread);
         }
     }
 
@@ -142,6 +163,15 @@ public class WeaponManager : MonoBehaviour
         // 자기 자신
         GameObject WeaponObject = UpdateWeapon(SpawnManager.instance.MyEntity.GetComponent<PlayerInfo>().HandHandler, Weapon);
         Weapon.ShotCoords = WeaponObject.transform.Find("ShotPos"); // 쏘는 좌표
+
+        if (ReloadThread != null) {
+            StopCoroutine(ReloadThread);
+            ReloadThread = null;
+        }
+
+        // UI 변경
+        MaxWeaponAmmo.text = Weapon.MaxAmmo.ToString();
+        CurrnetWeaponAmmo.text = Weapon.ammo.ToString();
         
         // 서버에서도 바꿔야징
         NetworkCore.Send("Room.WeaponChange", ID);
@@ -183,5 +213,15 @@ public class WeaponManager : MonoBehaviour
             new Vector3((float)domi.StartPos[0], (float)domi.StartPos[1], (float)domi.StartPos[2]),
             new Vector3((float)domi.DirectionPos[0], (float)domi.DirectionPos[1], (float)domi.DirectionPos[2])
         );
+    }
+
+    // 총 재장전
+    IEnumerator WeaponReload(domiWeapon Weapon) {
+        CurrnetWeaponAmmo.text = "재장전...";
+        yield return new WaitForSeconds(Weapon.ReloadDelay);
+
+        Weapon.ammo = Weapon.MaxAmmo; // 다시 채우기
+        CurrnetWeaponAmmo.text = Weapon.ammo.ToString();
+        ReloadThread = null;
     }
 }
