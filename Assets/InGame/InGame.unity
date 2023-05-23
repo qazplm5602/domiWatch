@@ -724,7 +724,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 185, y: 0}
   m_SizeDelta: {x: 0, y: 74.4}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &445767728
@@ -1485,7 +1485,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 185, y: 0}
   m_SizeDelta: {x: 0, y: 74.4}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &847964295
@@ -1681,6 +1681,7 @@ MonoBehaviour:
   Weapons:
   - Model: {fileID: 8701951577818738156, guid: 9affa3671b8eb8644b85ec19d9a7fb5f, type: 3}
     BulletModel: {fileID: 8428483630703208537, guid: c0d1c79106620cf4e9ddadc6d108caee, type: 3}
+    FireEffect: {fileID: 100006, guid: 4e82a41af11cc9a469634b103445f36a, type: 3}
     Image: {fileID: 21300000, guid: 11173d705a226c54386255db63868e48, type: 3}
     MaxAmmo: 50
     FireDelay: 1
@@ -1691,6 +1692,7 @@ MonoBehaviour:
     ShotCoords: {fileID: 0}
   - Model: {fileID: 4050061298882219018, guid: 02b11b76c5513094b986c3bbaa4522db, type: 3}
     BulletModel: {fileID: 8428483630703208537, guid: c0d1c79106620cf4e9ddadc6d108caee, type: 3}
+    FireEffect: {fileID: 100006, guid: 4c7778eb46021124091670a1e957f0a2, type: 3}
     Image: {fileID: 21300000, guid: 11173d705a226c54386255db63868e48, type: 3}
     MaxAmmo: 5
     FireDelay: 1
@@ -2900,7 +2902,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 185, y: 0}
   m_SizeDelta: {x: 0, y: 74.4}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1454428262

@@ -33,5 +33,8 @@ public class BulletSys : MonoBehaviour
 
         // 피 튀기는 방향 설정 (얘는 튀기는쪽이 반대여야함)
         BloodEffect.transform.rotation = Quaternion.LookRotation(-Direction);
+
+        // 자동 삭제ㅔㅔㅔ
+        BloodEffect.AddComponent<AutoRemoveEntity>().DelayRemove = 1;
     }
 }

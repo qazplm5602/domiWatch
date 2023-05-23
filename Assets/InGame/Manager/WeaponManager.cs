@@ -8,6 +8,7 @@ public class domiWeapon {
     // 설정 관련
     public GameObject Model;
     public GameObject BulletModel;
+    public GameObject FireEffect;
     public Sprite Image;
     public int MaxAmmo;
     public float FireDelay; // 총 빵빵 대기시간
@@ -125,6 +126,12 @@ public class WeaponManager : MonoBehaviour
             // 총알 소모
             SelectWeapon.ammo --;
             CurrnetWeaponAmmo.text = SelectWeapon.ammo.ToString();
+
+            // 발사 이펙트트
+            GameObject FireEffect = Instantiate(SelectWeapon.FireEffect, Vector3.zero, Quaternion.identity, SelectWeapon.ShotCoords);
+            FireEffect.transform.localPosition = SelectWeapon.FireEffect.transform.localPosition;
+            FireEffect.transform.localEulerAngles = SelectWeapon.FireEffect.transform.localEulerAngles;
+            FireEffect.AddComponent<AutoRemoveEntity>().DelayRemove = .2f; // 자동 삭제ㅔㅔㅔ
 
             // 서버한테 알리기
             NetworkCore.Send("Room.BulletCreate", new domiWeaponPacket(CurrentWeaponID, SelectWeapon.ShotCoords.position, Direcrtion));
