@@ -1542,6 +1542,7 @@ GameObject:
   - component: {fileID: 880374866}
   - component: {fileID: 880374867}
   - component: {fileID: 880374868}
+  - component: {fileID: 880374870}
   - component: {fileID: 880374869}
   m_Layer: 0
   m_Name: GameManager
@@ -1611,6 +1612,7 @@ MonoBehaviour:
     FireEffect: {fileID: 100006, guid: 4e82a41af11cc9a469634b103445f36a, type: 3}
     Image: {fileID: 21300000, guid: 11173d705a226c54386255db63868e48, type: 3}
     MaxAmmo: 50
+    Damage: 50
     FireDelay: 1
     ReloadDelay: 3
     SlotKey: 49
@@ -1622,12 +1624,27 @@ MonoBehaviour:
     FireEffect: {fileID: 100006, guid: 4c7778eb46021124091670a1e957f0a2, type: 3}
     Image: {fileID: 21300000, guid: 11173d705a226c54386255db63868e48, type: 3}
     MaxAmmo: 5
+    Damage: 100
     FireDelay: 1
     ReloadDelay: 3
     SlotKey: 50
     ShotSound: {fileID: 0}
     FireTime: 0
     ShotCoords: {fileID: 0}
+--- !u!114 &880374870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880374865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40498ffd1eba7aa419f4453ee160f7d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefualtHealth: 200
+  HealthBar: {fileID: 1222473533}
 --- !u!1 &912191170
 GameObject:
   m_ObjectHideFlags: 0
@@ -2547,19 +2564,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9528302, g: 0.73465496, b: 0.29363945, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0ae2b74b1edd14bb18dd7b65ae916a54, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b281b91a70a624a0da1c43adc1c30c7b, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.336
+  m_FillAmount: 0.451
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -2737,6 +2754,7 @@ GameObject:
   - component: {fileID: 1446204839}
   - component: {fileID: 1446204841}
   - component: {fileID: 1446204840}
+  - component: {fileID: 1446204842}
   m_Layer: 5
   m_Name: Health_Bar
   m_TagString: Untagged
@@ -2762,8 +2780,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0.000015258789, y: 53.4}
-  m_SizeDelta: {x: 0, y: 50}
+  m_AnchoredPosition: {x: 0.000015258789, y: 55}
+  m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1446204840
 MonoBehaviour:
@@ -2803,6 +2821,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1446204838}
   m_CullTransparentMesh: 1
+--- !u!225 &1446204842
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446204838}
+  m_Enabled: 1
+  m_Alpha: 0.8
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1454428260
 GameObject:
   m_ObjectHideFlags: 0
@@ -3127,7 +3157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.000061035156, y: 116}
+  m_AnchoredPosition: {x: -0.000061035156, y: 97.3}
   m_SizeDelta: {x: 145, y: 39.2}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &1651058524
@@ -3317,7 +3347,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0.000030517578, y: 116}
+  m_AnchoredPosition: {x: 0.000030517578, y: 97.3}
   m_SizeDelta: {x: 169.34, y: 39.2}
   m_Pivot: {x: 1, y: 0}
 --- !u!1 &1946528040

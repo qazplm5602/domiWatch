@@ -11,6 +11,7 @@ public class domiWeapon {
     public GameObject FireEffect;
     public Sprite Image;
     public int MaxAmmo;
+    public int Damage;
     public float FireDelay; // 총 빵빵 대기시간
     public float ReloadDelay; // 총 재장전 대기시간
     public KeyCode SlotKey;
@@ -162,6 +163,8 @@ public class WeaponManager : MonoBehaviour
         Bullet_System.BloodPrefeb = BloodEffect;
         // 어디로 날라가는지
         Bullet_System.Direction = direction;
+        // 맞으면 피 얼마나 깎는지ㅣㅣ
+        Bullet_System.Damage = weapon.Damage;
     }
 
     void ChangeMyWeapon(int ID) {
