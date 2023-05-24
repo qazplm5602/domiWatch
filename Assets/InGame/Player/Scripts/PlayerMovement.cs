@@ -47,11 +47,13 @@ public class PlayerMovement : MonoBehaviour
  
     void Update()
     {
-        // 현재 캐릭터가 땅에 있는가? / 안죽어 있으면
-        if (controller.isGrounded && !PlayerHealth.instance.isDie)
+        // 현재 캐릭터가 땅에 있는가?
+        if (controller.isGrounded)
         {
             // 위, 아래 움직임 셋팅. 
             MoveDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            if (PlayerHealth.instance.isDie)
+                MoveDir = Vector3.zero;
  
             // 벡터를 로컬 좌표계 기준에서 월드 좌표계 기준으로 변환한다.
             MoveDir = transform.TransformDirection(MoveDir);
@@ -59,8 +61,8 @@ public class PlayerMovement : MonoBehaviour
             // 스피드 증가.
             MoveDir *= speed;
  
-            // 캐릭터 점프
-            if (Input.GetButton("Jump"))
+            // 캐릭터 점프 / 안죽어있으면
+            if (Input.GetButton("Jump") && !PlayerHealth.instance.isDie)
                 MoveDir.y = jumpSpeed;
  
         }

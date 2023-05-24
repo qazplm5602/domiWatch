@@ -53,7 +53,7 @@ public class PlayerHealth : MonoBehaviour
     }
 
     private void Start() {
-        Invoke(nameof(asdsadas), 1);
+        Invoke(nameof(asdsadas), 3);
     }
     void asdsadas() => health = 0;
 
