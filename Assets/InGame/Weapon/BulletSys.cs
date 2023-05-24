@@ -39,7 +39,7 @@ public class BulletSys : MonoBehaviour
         BloodEffect.AddComponent<AutoRemoveEntity>().DelayRemove = 1;
 
         // 총알 맞은 플레이어가 나
-        if (SpawnManager.instance.MyEntity == other.gameObject) {
+        if (SpawnManager.instance.MyEntity == other.gameObject && !PlayerHealth.instance.isDie) {
             PlayerHealth.instance.health -= Damage;
             if (PlayerHealth.instance.health <= 0) { // 죽었다!!
                 print($"{CreatePlayer}님이 당신을 처치하였습다");

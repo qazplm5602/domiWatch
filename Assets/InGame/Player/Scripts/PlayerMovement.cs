@@ -47,8 +47,8 @@ public class PlayerMovement : MonoBehaviour
  
     void Update()
     {
-        // 현재 캐릭터가 땅에 있는가?
-        if (controller.isGrounded)
+        // 현재 캐릭터가 땅에 있는가? / 안죽어 있으면
+        if (controller.isGrounded && !PlayerHealth.instance.isDie)
         {
             // 위, 아래 움직임 셋팅. 
             MoveDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -70,6 +70,8 @@ public class PlayerMovement : MonoBehaviour
  
         // 캐릭터 움직임.
         controller.Move(MoveDir * Time.deltaTime);
+
+        if (PlayerHealth.instance.isDie) return; // 죽어있으면 아래 코드는 실행하지 않음
 
         // Get mouse movement inputs
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
