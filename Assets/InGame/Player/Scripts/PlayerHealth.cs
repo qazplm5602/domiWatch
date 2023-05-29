@@ -4,6 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
+class PlayerDiePacket {
+    public string DiePlayer;
+    public string DiePlayerName;
+    public string Attacker;
+    public bool YouKill;
+    public bool YouDead;
+}
+
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] int DefualtHealth = 200;
@@ -37,6 +45,14 @@ public class PlayerHealth : MonoBehaviour
 
         health = DefualtHealth;
         HealthBar.fillAmount = 1;
+
+        // 이벤트 리스너 등록
+        NetworkCore.EventListener["Room.BroadcastPlayerDie"] = OtherPlayerDie;
+    }
+
+    private void OnDestroy() {
+        // 이벤트 리스너 해제    
+        NetworkCore.EventListener.Remove("Room.BroadcastPlayerDie");
     }
 
     void UpdateHealthBar() {
@@ -52,10 +68,10 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    private void Start() {
-        Invoke(nameof(asdsadas), 3);
-    }
-    void asdsadas() => health = 0;
+    // private void Start() {
+    //     Invoke(nameof(asdsadas), 3);
+    // }
+    // void asdsadas() => health = 0;
 
     void OnDie() {
         GameObject MyEntity = SpawnManager.instance.MyEntity;
@@ -66,5 +82,17 @@ public class PlayerHealth : MonoBehaviour
         // 카메라 뒤로
         Camera.main.transform.DOLocalMove(Camera.main.transform.localPosition + (Vector3.up * 5) + (Vector3.back * 5), 1f).SetEase(Ease.OutQuad);
         Camera.main.transform.DOLocalRotate(new Vector3(45.65f, 0, 0), 1f).SetEase(Ease.OutQuad);
+    }
+
+    void OtherPlayerDie(LitJson.JsonData data) {
+        var DieInfo = LitJson.JsonMapper.ToObject<PlayerDiePacket>(data.ToJson());
+
+        // 플레이어 쓰러지게 해야징 (내가 죽은거면 안함)
+        if (!DieInfo.YouDead && SyncManager.PlayerEntity.TryGetValue(DieInfo.DiePlayer, out var DieEntity)) {
+            DieEntity.GetComponent<Animator>().SetBool("isDie", true); // 죽은 행동
+            DieEntity.GetComponent<CharacterController>().enabled = false; // 콜라이더 비활..            
+        }
+
+        print($"서버가 {DieInfo.DiePlayerName} 이(가) 죽었고 {DieInfo.Attacker} 이(가) 사살했다고 말했음");
     }
 }

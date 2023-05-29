@@ -2,6 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+class PlayerDamagePacketForm {
+    public string AttackID;
+    public bool isDie;
+
+    public PlayerDamagePacketForm(string _id, bool _isDie) {
+        AttackID = _id;
+        isDie = _isDie;
+    }
+}
+
 public class BulletSys : MonoBehaviour
 {
     public string CreatePlayer = null;
@@ -41,9 +51,12 @@ public class BulletSys : MonoBehaviour
         // 총알 맞은 플레이어가 나
         if (SpawnManager.instance.MyEntity == other.gameObject && !PlayerHealth.instance.isDie) {
             PlayerHealth.instance.health -= Damage;
-            if (PlayerHealth.instance.health <= 0) { // 죽었다!!
+            if (PlayerHealth.instance.isDie) { // 죽었다!!
                 print($"{CreatePlayer}님이 당신을 처치하였습다");
             }
+
+            // 서버한테 피해 받았다고 알리면서 죽었는지도 알려줌
+            NetworkCore.Send("Room.PlayerDamage", new PlayerDamagePacketForm(CreatePlayer, PlayerHealth.instance.isDie));
         }
     }
 }

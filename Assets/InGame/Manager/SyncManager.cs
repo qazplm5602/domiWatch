@@ -8,6 +8,7 @@ public class AllPlayerPacket {
     public double[] coords = new double[3];
     public double[] rotate = new double[2];
     public int weapon;
+    public bool dead;
 }
 
 public class SyncManager : MonoBehaviour
@@ -53,6 +54,12 @@ public class SyncManager : MonoBehaviour
 
             // 총 동기화
             WeaponManager.instance.PlayerChangeWeapon(PlayerData.id, PlayerData.weapon);
+
+            // 이미 죽었낭?
+            if (PlayerData.dead) {
+                PlayerObj.GetComponent<Animator>().SetBool("isDie", true);
+                PlayerObj.GetComponent<CharacterController>().enabled = false;
+            }
         }
     }
 

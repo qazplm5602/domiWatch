@@ -13,7 +13,8 @@ TriggerEvent["Room.GetAllPlayer"] = function(id) {
                 id: PlayerID,
                 coords: Player.coords,
                 rotate: Player.rotate,
-                weapon: Player.Weapon
+                weapon: Player.Weapon,
+                dead: Player.Dead
             });
         }
     }

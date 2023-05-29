@@ -9,6 +9,7 @@ class RoomInterface {
 
 require("./RoomSync.js");
 require("./RoomWeapon.js");
+require("./RoomHealth.js");
 
 // global.RoomPlayers["qazplm5602"] = {
 //     coords: [0,0,0],
