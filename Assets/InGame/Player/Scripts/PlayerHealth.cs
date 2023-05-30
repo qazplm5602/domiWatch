@@ -14,8 +14,13 @@ class PlayerDiePacket {
 
 public class PlayerHealth : MonoBehaviour
 {
+    [Header("자신 플레이어")]
     [SerializeField] int DefualtHealth = 200;
     [SerializeField] Image HealthBar;
+    
+    [Header("킬로그 설정")]
+    [SerializeField] Transform KillLog_List;
+    [SerializeField] GameObject KillLog_Form;
     
     public static PlayerHealth instance;
     
@@ -68,10 +73,14 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    // private void Start() {
-    //     Invoke(nameof(asdsadas), 3);
-    // }
-    // void asdsadas() => health = 0;
+    private void Start() {
+        InvokeRepeating(nameof(asdsadas), 2, 1);
+    }
+    void asdsadas() {
+        // 킬로그 소환
+        GameObject KillLogEntity = Instantiate(KillLog_Form, Vector3.zero, Quaternion.identity, KillLog_List);
+        KillLogEntity.GetComponent<KillLogSys>().Init("domi Attacker", "domi Die!!");
+    }
 
     void OnDie() {
         GameObject MyEntity = SpawnManager.instance.MyEntity;
@@ -93,6 +102,10 @@ public class PlayerHealth : MonoBehaviour
             DieEntity.GetComponent<CharacterController>().enabled = false; // 콜라이더 비활..            
         }
 
+        // 킬로그 소환
+        GameObject KillLogEntity = Instantiate(KillLog_Form, Vector3.zero, Quaternion.identity, KillLog_List);
+        KillLogEntity.GetComponent<KillLogSys>().Init(DieInfo.Attacker, DieInfo.DiePlayerName);
+        
         print($"서버가 {DieInfo.DiePlayerName} 이(가) 죽었고 {DieInfo.Attacker} 이(가) 사살했다고 말했음");
     }
 }
