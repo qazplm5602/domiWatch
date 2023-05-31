@@ -73,15 +73,6 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    private void Start() {
-        InvokeRepeating(nameof(asdsadas), 2, 1);
-    }
-    void asdsadas() {
-        // 킬로그 소환
-        GameObject KillLogEntity = Instantiate(KillLog_Form, Vector3.zero, Quaternion.identity, KillLog_List);
-        KillLogEntity.GetComponent<KillLogSys>().Init("domi Attacker", "domi Die!!");
-    }
-
     void OnDie() {
         GameObject MyEntity = SpawnManager.instance.MyEntity;
 
