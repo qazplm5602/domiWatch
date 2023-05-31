@@ -60,7 +60,12 @@ const server = net.createServer(function(socket) {
                             if (MessageDecode.type !== undefined && MessageDecode.data !== undefined) {
                                 const Callback = global.TriggerEvent[MessageDecode.type];
                                 if (typeof(Callback) === "function") {
-                                    Callback(MyID, MessageDecode.data); // 콜백 실행
+                                    try {
+                                        Callback(MyID, MessageDecode.data); // 콜백 실행
+                                    } catch (error) {
+                                        console.error("CallBack 함수 구현오류");
+                                        console.error(error);
+                                    }
                                 } else
                                     console.error(`[main] ${MyID} 알수없는 Trigger : ${MessageDecode.type}`);
                             } else {
