@@ -195,8 +195,10 @@ public class WeaponManager : MonoBehaviour
         
         // 총 소환
         GameObject WeaponEntity = Instantiate(Weapon.Model, Vector3.zero, Quaternion.identity, Hand.transform);
-        WeaponEntity.transform.localPosition = Vector3.zero;
-        WeaponEntity.transform.localEulerAngles = Vector3.zero;
+        // WeaponEntity.transform.localPosition = Vector3.zero;
+        // WeaponEntity.transform.localEulerAngles = Vector3.zero;
+        WeaponEntity.transform.localPosition = Weapon.Model.transform.localPosition;
+        WeaponEntity.transform.localEulerAngles = Weapon.Model.transform.localEulerAngles;
 
         return WeaponEntity;
     }

@@ -21,6 +21,9 @@ public class PlayerHealth : MonoBehaviour
     [Header("킬로그 설정")]
     [SerializeField] Transform KillLog_List;
     [SerializeField] GameObject KillLog_Form;
+
+    [Header("아이유")]
+    [SerializeField] RectTransform WaitHeader;
     
     public static PlayerHealth instance;
     
@@ -82,6 +85,9 @@ public class PlayerHealth : MonoBehaviour
         // 카메라 뒤로
         Camera.main.transform.DOLocalMove(Camera.main.transform.localPosition + (Vector3.up * 5) + (Vector3.back * 5), 1f).SetEase(Ease.OutQuad);
         Camera.main.transform.DOLocalRotate(new Vector3(45.65f, 0, 0), 1f).SetEase(Ease.OutQuad);
+
+        // 리스폰 대기...
+        WaitHeader.gameObject.SetActive(true);
     }
 
     void OtherPlayerDie(LitJson.JsonData data) {
