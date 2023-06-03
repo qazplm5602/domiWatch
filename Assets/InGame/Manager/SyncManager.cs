@@ -80,7 +80,13 @@ public class SyncManager : MonoBehaviour
 
         // 얘가 부드럽게 해준다고 시킬꺼
         PlayerSyncMove EntityMove = Entity.GetComponent<PlayerSyncMove>();
-        EntityMove.LastCoords = new Vector3((float)PlayerData.coords[0], (float)PlayerData.coords[1], (float)PlayerData.coords[2]);
+        Vector3 UpdateCoords = new Vector3((float)PlayerData.coords[0], (float)PlayerData.coords[1], (float)PlayerData.coords[2]);
+
+        // 텔포다!!!
+        if (Vector3.Distance(UpdateCoords, Entity.transform.position) > 10)
+            Entity.transform.position = UpdateCoords;
+
+        EntityMove.LastCoords = UpdateCoords;
         EntityMove.LastMouseX = (float)PlayerData.rotate[1];
         // EntityMove.LastMouseY = (float)PlayerData.rotate[0];
     }

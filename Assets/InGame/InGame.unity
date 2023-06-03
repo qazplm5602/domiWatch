@@ -21862,7 +21862,7 @@ MonoBehaviour:
   HealthBar: {fileID: 1222473533}
   KillLog_List: {fileID: 504394722}
   KillLog_Form: {fileID: 4618374046538279355, guid: db5d7c4c6e7659248834bd5712e32671, type: 3}
-  WaitHeader: {fileID: 0}
+  WaitHeader: {fileID: 352786441}
 --- !u!1001 &880927272
 PrefabInstance:
   m_ObjectHideFlags: 0
