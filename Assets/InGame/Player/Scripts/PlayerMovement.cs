@@ -34,17 +34,15 @@ public class PlayerMovement : MonoBehaviour
     float SaveX;
     float SaveY;
     
-    
-    void Start()
-    {
+    private void Awake() {
+        controller = GetComponent<CharacterController>();
         speed     = 6.0f;
         jumpSpeed = 8.0f;
         gravity   = 20.0f;
  
         MoveDir = Vector3.zero;
-        controller = GetComponent<CharacterController>();
     }
- 
+    
     void Update()
     {
         // 현재 캐릭터가 땅에 있는가?
@@ -87,7 +85,13 @@ public class PlayerMovement : MonoBehaviour
         // Rotate the character horizontally
         transform.Rotate(Vector3.up * mouseX);
     }
-    
+
+    public void SetCoords(Vector3 coords) {
+        controller.enabled = false;
+        transform.position = coords;
+        controller.enabled = true;
+    }
+
     [SerializeField, Range(0, 10f)]
     float SyncBetween = 2;
     private void FixedUpdate() {

@@ -20,6 +20,7 @@ public class SyncManager : MonoBehaviour
         NetworkCore.EventListener["Room.ResultAllPlayer"] = AllPlayerSync;
         NetworkCore.EventListener["Room.PlayerAdd"] = PlayerAdd;
         NetworkCore.EventListener["Room.PlayerUpdate"] = ResultPlayerUpdate;
+        NetworkCore.EventListener["Room.PlayerSetCoords"] = MyCoordSet;
     }
 
     private void OnDestroy() {
@@ -27,6 +28,7 @@ public class SyncManager : MonoBehaviour
         NetworkCore.EventListener.Remove("Room.ResultAllPlayer");
         NetworkCore.EventListener.Remove("Room.PlayerAdd");
         NetworkCore.EventListener.Remove("Room.PlayerUpdate");
+        NetworkCore.EventListener.Remove("Room.PlayerSetCoords");
     }
 
     void Start()
@@ -89,5 +91,14 @@ public class SyncManager : MonoBehaviour
         EntityMove.LastCoords = UpdateCoords;
         EntityMove.LastMouseX = (float)PlayerData.rotate[1];
         // EntityMove.LastMouseY = (float)PlayerData.rotate[0];
+    }
+
+    // 서버에서 내 좌표 바꾸래
+    void MyCoordSet(JsonData data) {
+        Vector3 Coords = JsonUtility.FromJson<Vector3>(data.ToJson());
+
+        var MyEntity = SpawnManager.instance.MyEntity;
+        if (MyEntity != null) 
+            MyEntity.GetComponent<PlayerMovement>().SetCoords(Coords);
     }
 }
