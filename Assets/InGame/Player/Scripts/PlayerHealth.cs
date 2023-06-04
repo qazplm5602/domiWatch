@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 class PlayerDiePacket {
     public string DiePlayer;
@@ -10,6 +11,10 @@ class PlayerDiePacket {
     public string Attacker;
     public bool YouKill;
     public bool YouDead;
+}
+class PlayerReSpawnPacket {
+    public string id;
+    public bool my;
 }
 
 public class PlayerHealth : MonoBehaviour
@@ -56,11 +61,13 @@ public class PlayerHealth : MonoBehaviour
 
         // 이벤트 리스너 등록
         NetworkCore.EventListener["Room.BroadcastPlayerDie"] = OtherPlayerDie;
+        NetworkCore.EventListener["Room.BroadcastPlayerRespawn"] = PlayerReSpawn;
     }
 
     private void OnDestroy() {
         // 이벤트 리스너 해제    
         NetworkCore.EventListener.Remove("Room.BroadcastPlayerDie");
+        NetworkCore.EventListener.Remove("Room.BroadcastPlayerRespawn");
     }
 
     void UpdateHealthBar() {
@@ -88,6 +95,7 @@ public class PlayerHealth : MonoBehaviour
 
         // 리스폰 대기...
         WaitHeader.gameObject.SetActive(true);
+        StartCoroutine(WaitReSpawn());
     }
 
     void OtherPlayerDie(LitJson.JsonData data) {
@@ -104,5 +112,40 @@ public class PlayerHealth : MonoBehaviour
         KillLogEntity.GetComponent<KillLogSys>().Init(DieInfo.Attacker, DieInfo.DiePlayerName);
         
         print($"서버가 {DieInfo.DiePlayerName} 이(가) 죽었고 {DieInfo.Attacker} 이(가) 사살했다고 말했음");
+    }
+
+    IEnumerator WaitReSpawn() {
+        var TextUI = WaitHeader.Find("Time").GetComponent<TextMeshProUGUI>();
+        for (int i = 30; i > 0; i--)
+        {
+            TextUI.text = $"<color=#f99e1a>{i}초</color> 남았습니다.";
+            yield return new WaitForSeconds(1);
+        }
+
+        print("리스폰!");
+        WaitHeader.gameObject.SetActive(false);
+        NetworkCore.Send("Room.RequestRespawn", null);
+    }
+
+    void PlayerReSpawn(LitJson.JsonData data) {
+        var PlayerInfo = LitJson.JsonMapper.ToObject<PlayerReSpawnPacket>(data.ToJson());
+
+        GameObject PlayerEntity;
+
+        // 만약 my가 true면 자신 엔티티 가져옴
+        // 아니면 다른 플레이어 가져옴
+        // 다른 플레이어 엔티티가 없으면 밑 코드는 실행안해ㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐ
+        if (PlayerInfo.my) {
+            PlayerEntity = SpawnManager.instance.MyEntity;
+            health = DefualtHealth; // 피 차야지
+            // 다시 원래 자리로~
+            Camera.main.transform.DOLocalMove(Camera.main.transform.localPosition - (Vector3.up * 5) - (Vector3.back * 5), 2f).SetEase(Ease.OutQuad);
+        }
+        else if (SyncManager.PlayerEntity.TryGetValue(PlayerInfo.id, out PlayerEntity)) {}
+        else return;
+
+        // 다시 살아낫
+        PlayerEntity.GetComponent<Animator>().SetBool("isDie", false);
+        PlayerEntity.GetComponent<CharacterController>().enabled = true; // 콜라이더 활성
     }
 }
