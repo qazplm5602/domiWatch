@@ -24,8 +24,8 @@ public class KillLogSys : MonoBehaviour
         
         // 나타나는 효과
         domiSequence = DOTween.Sequence();
-        domiSequence.Append(transform.DOSizeDelta(new Vector2(450, transform.sizeDelta.y), 0.3f).SetEase(Ease.OutQuad));
-        domiSequence.Append(canvasG.DOFade(1, 0.3f).SetEase(Ease.OutQuad));
+        domiSequence.Join(transform.DOSizeDelta(new Vector2(450, transform.sizeDelta.y), 0.3f).SetEase(Ease.OutQuad));
+        domiSequence.Join(canvasG.DOFade(1, 0.3f).SetEase(Ease.OutQuad));
 
         // 선한쌤이 제일 싫어하시는 Invoke!!
         Invoke(nameof(RemoveKillLog), 8);
@@ -33,7 +33,7 @@ public class KillLogSys : MonoBehaviour
 
     void RemoveKillLog() {
         domiSequence = DOTween.Sequence();
-        domiSequence.Append(transform.DOSizeDelta(new Vector2(550, transform.sizeDelta.y), 0.3f).SetEase(Ease.OutQuad));
-        domiSequence.Append(canvasG.DOFade(0, 0.3f).SetEase(Ease.OutQuad).OnComplete(() => Destroy(gameObject)));
+        domiSequence.Join(transform.DOSizeDelta(new Vector2(550, transform.sizeDelta.y), 0.3f).SetEase(Ease.OutQuad));
+        domiSequence.Join(canvasG.DOFade(0, 0.3f).SetEase(Ease.OutQuad).OnComplete(() => Destroy(gameObject)));
     }
 }
