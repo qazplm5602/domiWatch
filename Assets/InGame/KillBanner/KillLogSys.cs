@@ -18,19 +18,12 @@ public class KillLogSys : MonoBehaviour
         transform = GetComponent<RectTransform>();
     }
 
-    private void Start() {
-        domiSequence = DOTween.Sequence();
-    }
-
-    private void OnDestroy() {
-        domiSequence = null;
-    }
-
     public void Init(string Attacker, string Dier) {
         AttackerUI.text = Attacker;
         DiePlayerUI.text = Dier;
         
         // 나타나는 효과
+        domiSequence = DOTween.Sequence();
         domiSequence.Append(transform.DOSizeDelta(new Vector2(450, transform.sizeDelta.y), 0.3f).SetEase(Ease.OutQuad));
         domiSequence.Append(canvasG.DOFade(1, 0.3f).SetEase(Ease.OutQuad));
 
@@ -39,6 +32,7 @@ public class KillLogSys : MonoBehaviour
     }
 
     void RemoveKillLog() {
+        domiSequence = DOTween.Sequence();
         domiSequence.Append(transform.DOSizeDelta(new Vector2(550, transform.sizeDelta.y), 0.3f).SetEase(Ease.OutQuad));
         domiSequence.Append(canvasG.DOFade(0, 0.3f).SetEase(Ease.OutQuad).OnComplete(() => Destroy(gameObject)));
     }
