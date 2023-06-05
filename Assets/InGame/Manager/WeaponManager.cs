@@ -165,6 +165,23 @@ public class WeaponManager : MonoBehaviour
         Bullet_System.Direction = direction;
         // 맞으면 피 얼마나 깎는지ㅣㅣ
         Bullet_System.Damage = weapon.Damage;
+
+        // 소리도 추가!!
+        GameObject SoundObj = new("WeaponAidio-"+(AttackID != null ? AttackID : "my"));
+        SoundObj.transform.position = startPos;
+        
+        var AudioComponent = SoundObj.AddComponent<AudioSource>();
+        AudioComponent.playOnAwake = false;
+        AudioComponent.loop = false;
+        AudioComponent.clip = weapon.ShotSound; // 소리 파일
+        AudioComponent.rolloffMode = AudioRolloffMode.Linear; // 멀리 갈수록 안들리게
+        if (AttackID != null) // 3d 오디오는 자신이 아닌 다른 사람이 쏜경우에만 적용함!!!
+            AudioComponent.spatialBlend = 1; // 3d 오디오오오
+        AudioComponent.maxDistance = 50; // 최대 거리
+        AudioComponent.Play();
+
+        // 자동 삭제
+        StartCoroutine(AudioAutoRemove(AudioComponent, SoundObj));
     }
 
     void ChangeMyWeapon(int ID) {
@@ -235,5 +252,11 @@ public class WeaponManager : MonoBehaviour
         Weapon.ammo = Weapon.MaxAmmo; // 다시 채우기
         CurrnetWeaponAmmo.text = Weapon.ammo.ToString();
         ReloadThread = null;
+    }
+
+    // 오디오 자동 삭제
+    IEnumerator AudioAutoRemove(AudioSource audioSource, GameObject entity) {
+        yield return new WaitUntil(() => !audioSource.isPlaying);
+        Destroy(entity);
     }
 }

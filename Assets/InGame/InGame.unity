@@ -21819,7 +21819,7 @@ MonoBehaviour:
     FireDelay: 1
     ReloadDelay: 3
     SlotKey: 49
-    ShotSound: {fileID: 0}
+    ShotSound: {fileID: 8300000, guid: 65201ddabb4144f6a8fb9480120b7656, type: 3}
     FireTime: 0
     ShotCoords: {fileID: 0}
   - Model: {fileID: 4050061298882219018, guid: 02b11b76c5513094b986c3bbaa4522db, type: 3}
@@ -21843,7 +21843,7 @@ MonoBehaviour:
     FireDelay: 0.1
     ReloadDelay: 5
     SlotKey: 51
-    ShotSound: {fileID: 0}
+    ShotSound: {fileID: 8300000, guid: 65201ddabb4144f6a8fb9480120b7656, type: 3}
     FireTime: 0
     ShotCoords: {fileID: 0}
 --- !u!114 &880374870
