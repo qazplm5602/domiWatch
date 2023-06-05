@@ -10866,7 +10866,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 185, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 74.4}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &445767728
@@ -21060,7 +21060,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 185, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 74.4}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &847964295
@@ -22040,6 +22040,7 @@ GameObject:
   - component: {fileID: 880374868}
   - component: {fileID: 880374870}
   - component: {fileID: 880374869}
+  - component: {fileID: 880374871}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -22156,6 +22157,22 @@ MonoBehaviour:
   KillLog_List: {fileID: 504394722}
   KillLog_Form: {fileID: 4618374046538279355, guid: db5d7c4c6e7659248834bd5712e32671, type: 3}
   WaitHeader: {fileID: 352786441}
+--- !u!114 &880374871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880374865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9acd2445caefaa64fbdd4d64b1e1dc04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowKEY: 9
+  ScoreBoardMain: {fileID: 462105969}
+  PlayerList: {fileID: 892042882}
+  PlayerBoxUI: {fileID: 2868125521342169910, guid: d6a50de3434ced4418611972fcff5809, type: 3}
 --- !u!1001 &880927272
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37400,7 +37417,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 185, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 74.4}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1454428262
