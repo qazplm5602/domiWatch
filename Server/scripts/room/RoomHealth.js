@@ -28,6 +28,10 @@ TriggerEvent["Room.PlayerDamage"] = function(id, data) {
             YouKill: data.AttackID === PlayerID,
             YouDead: id === PlayerID
         });
+
+        // 스코어 수정
+        N_Player.socket.send("Room.ScoreEdit", { mode: "death", id: id, value: RoomPlayer.Score.death });
+        N_Player.socket.send("Room.ScoreEdit", { mode: "kill", id: data.AttackID, value: Attacker_RoomPlayer.Score.kill });
     }
 }
 

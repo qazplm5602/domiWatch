@@ -30,6 +30,7 @@ public class SyncManager : MonoBehaviour
         NetworkCore.EventListener["Room.PlayerUpdate"] = ResultPlayerUpdate;
         NetworkCore.EventListener["Room.PlayerSetCoords"] = MyCoordSet;
         NetworkCore.EventListener["Room.ScoreAddMY"] = MyScoreAdd;
+        NetworkCore.EventListener["Room.ScoreEdit"] = ScoreEdit;
     }
 
     private void OnDestroy() {
@@ -39,6 +40,7 @@ public class SyncManager : MonoBehaviour
         NetworkCore.EventListener.Remove("Room.PlayerUpdate");
         NetworkCore.EventListener.Remove("Room.PlayerSetCoords");
         NetworkCore.EventListener.Remove("Room.ScoreAddMY");
+        NetworkCore.EventListener.Remove("Room.ScoreEdit");
     }
 
     void Start()
@@ -124,5 +126,23 @@ public class SyncManager : MonoBehaviour
     void MyScoreAdd(JsonData data) {
         NameTag.text = (string)data["name"];
         ScoreboardManager.Create((string)data["id"], (string)data["name"], true);
+    }
+
+    // 스코어보드 점수 수정수정
+    void ScoreEdit(JsonData data) {
+        ScoreboardManager.TextMode mode;
+        switch ((string)data["mode"])
+        {
+            case "kill":
+                mode = ScoreboardManager.TextMode.Kill;
+                break;
+            case "death":
+                mode = ScoreboardManager.TextMode.Death;
+                break;
+            default:
+                return;
+        }
+
+        ScoreboardManager.EditText(mode, (string)data["id"], ((int)data["value"]).ToString());
     }
 }
