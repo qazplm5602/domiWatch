@@ -5,10 +5,17 @@ using LitJson;
 
 public class AllPlayerPacket {
     public string id;
+    public string name;
     public double[] coords = new double[3];
     public double[] rotate = new double[2];
     public int weapon;
     public bool dead;
+    public int score_kill;
+    public int score_death;
+}
+public class PlayerAddPacket {
+    public string id;
+    public string name;
 }
 
 public class SyncManager : MonoBehaviour
@@ -21,6 +28,7 @@ public class SyncManager : MonoBehaviour
         NetworkCore.EventListener["Room.PlayerAdd"] = PlayerAdd;
         NetworkCore.EventListener["Room.PlayerUpdate"] = ResultPlayerUpdate;
         NetworkCore.EventListener["Room.PlayerSetCoords"] = MyCoordSet;
+        NetworkCore.EventListener["Room.ScoreAddMY"] = MyScoreAdd;
     }
 
     private void OnDestroy() {
@@ -29,6 +37,7 @@ public class SyncManager : MonoBehaviour
         NetworkCore.EventListener.Remove("Room.PlayerAdd");
         NetworkCore.EventListener.Remove("Room.PlayerUpdate");
         NetworkCore.EventListener.Remove("Room.PlayerSetCoords");
+        NetworkCore.EventListener.Remove("Room.ScoreAddMY");
     }
 
     void Start()
@@ -62,16 +71,24 @@ public class SyncManager : MonoBehaviour
                 PlayerObj.GetComponent<Animator>().SetBool("isDie", true);
                 PlayerObj.GetComponent<CharacterController>().enabled = false;
             }
+
+            // 스코어보드 추가
+            ScoreboardManager.Create(PlayerData.id, PlayerData.name, false);
+            ScoreboardManager.EditText(ScoreboardManager.TextMode.Kill, PlayerData.id, PlayerData.score_kill.ToString());
+            ScoreboardManager.EditText(ScoreboardManager.TextMode.Death, PlayerData.id, PlayerData.score_death.ToString());
         }
     }
 
     // 서버에서 플레이어 추가해달라고 함
-    void PlayerAdd(JsonData id) {
-        print(id);
+    void PlayerAdd(JsonData data) {
+        var PlayerInfo = JsonMapper.ToObject<PlayerAddPacket>(data.ToJson());
         GameObject PlayerObj = SpawnManager.instance.SpawnPlayer("VanguardChoonyung");
         PlayerObj.tag = "Player";
-        PlayerObj.name = "Player-"+(string)id;
-        PlayerEntity[(string)id] = PlayerObj;
+        PlayerObj.name = "Player-"+PlayerInfo.id;
+        PlayerEntity[PlayerInfo.id] = PlayerObj;
+
+        // 스코어보드 추가
+        ScoreboardManager.Create(PlayerInfo.id, PlayerInfo.name, false);
     }
 
     // 서버에서 플레이어 좌표를 업뎃 해달라고 요청했지롱
@@ -101,4 +118,7 @@ public class SyncManager : MonoBehaviour
         if (MyEntity != null) 
             MyEntity.GetComponent<PlayerMovement>().SetCoords(Coords);
     }
+
+    // 서버에서 내꺼 스코어 추가하래
+    void MyScoreAdd(JsonData data) => ScoreboardManager.Create((string)data["id"], (string)data["name"], true);
 }

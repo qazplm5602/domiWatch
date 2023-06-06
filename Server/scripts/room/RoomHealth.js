@@ -6,7 +6,8 @@ TriggerEvent["Room.PlayerDamage"] = function(id, data) {
     if (Player === undefined || RoomPlayer === undefined || RoomPlayer.Dead || data == null || data.AttackID === undefined || data.isDie === undefined) return;
     
     const Attacker_Player = Players[data.AttackID];
-    if (Attacker_Player === undefined) return; // 플레이어 검사
+    const Attacker_RoomPlayer = RoomPlayers[data.AttackID];
+    if (Attacker_Player === undefined || Attacker_RoomPlayer === undefined) return; // 플레이어 검사
 
     if (data.isDie)
         RoomPlayer.Dead = true;
@@ -14,6 +15,9 @@ TriggerEvent["Room.PlayerDamage"] = function(id, data) {
     console.log(`[데미지] ${Attacker_Player.name} -> ${Player.name} [${(data.isDie ? "죽음" : "안죽엉")}]`);
 
     if (!data.isDie) return; // 죽지 않았다면 밑 코드는 실행하지 않음
+
+    RoomPlayer.Score.death ++; // 자신 데스 추가
+    Attacker_RoomPlayer.Score.kill ++; // 상대방 킬 추가
  
     for (const PlayerID in RoomPlayers) {
         const N_Player = Players[PlayerID];

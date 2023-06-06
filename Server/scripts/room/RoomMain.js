@@ -5,6 +5,10 @@ class RoomInterface {
     rotate = [90, -13.35];
     Weapon = 0;
     Dead = false;
+    Score = {
+        kill: 0,
+        death: 0
+    }
 }
 
 require("./RoomSync.js");
@@ -35,9 +39,12 @@ TriggerEvent["Room.Join"] = function(id) {
     // 모두에게 알려야지
     for (const PlayerID in global.RoomPlayers) {
         if (id !== PlayerID) { // 자기자신은 소환하면 안되지
-            const Player = Players[PlayerID];
+            const N_Player = Players[PlayerID];
             console.log(PlayerID + " - Room Player Add");
-            Player.socket.send("Room.PlayerAdd", id);
+            N_Player.socket.send("Room.PlayerAdd", {
+                id:id,
+                name: Player.name
+            });
         }
     }
 }

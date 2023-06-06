@@ -9,17 +9,22 @@ TriggerEvent["Room.GetAllPlayer"] = function(id) {
 
     for (const PlayerID in RoomPlayers) {
         if (id !== PlayerID) { // (테스트로 일단 비활)
+            const originPlayer = Players[PlayerID];
             const Player = RoomPlayers[PlayerID];
             SendPlayers.push({
                 id: PlayerID,
+                name: originPlayer.name,
                 coords: Player.coords,
                 rotate: Player.rotate,
                 weapon: Player.Weapon,
-                dead: Player.Dead
+                dead: Player.Dead,
+                score_kill: Player.Score.kill,
+                score_death: Player.Score.death,
             });
         }
     }
 
+    Player.socket.send("Room.ScoreAddMY", { id: id, name: Player.name }); // 자기자신 스코어보드 추가
     Player.socket.send("Room.ResultAllPlayer", SendPlayers);
 
     // 좌표 랜덤으로 소환

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class ScoreboardManager : MonoBehaviour
@@ -34,7 +35,13 @@ public class ScoreboardManager : MonoBehaviour
 
             // 이름 수정
             Box.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = name;
+
+            // 자기자신이면 색상 다르게 함
+            if (my)
+                Box.GetComponent<RawImage>().color = new Color32(237, 210, 0, 150);
         }
+    
+        public void Remove() => Destroy(Box);
     }
 
     private void Awake() {
@@ -54,8 +61,16 @@ public class ScoreboardManager : MonoBehaviour
             ScoreBoardMain.SetActive(false);
     }
 
+    /////////// 메서드 ///////////
     public static void Create(string id, string name, bool my) {
         ScorePlayers[id] = new(id, name, my);
+    }
+
+    public static void Remove(string id) {
+        if (!ScorePlayers.TryGetValue(id, out var ScoreEntity)) return;
+        
+        ScoreEntity.Remove();
+        ScorePlayers.Remove(id);
     }
 
     public static void EditText(TextMode mode, string id, string value) {
