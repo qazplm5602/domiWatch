@@ -25,9 +25,17 @@ public class BulletSys : MonoBehaviour
 
         // 회전
         transform.rotation = Quaternion.LookRotation(Direction);
+
+        // 자동 삭제
+        if (Mathf.Abs(transform.position.y) >= 50 || Mathf.Abs(transform.position.x) >= 150 || Mathf.Abs(transform.position.z) >= 200)
+            Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("Map")) { // 맵이랑 충돌하면 지움
+            Destroy(gameObject);
+            return;
+        }
         if (!other.gameObject.CompareTag("Player")) return;
 
         // 내가 쏜 총알이고 자기 자신이 맞은거면

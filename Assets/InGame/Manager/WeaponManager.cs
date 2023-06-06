@@ -157,6 +157,10 @@ public class WeaponManager : MonoBehaviour
         Bullet.tag = "Bullet"; // 태그 지정
         BulletSys Bullet_System = Bullet.AddComponent<BulletSys>();
 
+        // 맵 콜라이더도 인식하기 위해 rigidbody 넣음
+        var BulletRigid = Bullet.AddComponent<Rigidbody>();
+        BulletRigid.constraints = RigidbodyConstraints.FreezeAll;
+
         // 이 총알을 만든 사람
         Bullet_System.CreatePlayer = AttackID;
         // 피 튀기는 옵젝
