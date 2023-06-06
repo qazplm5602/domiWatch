@@ -11,6 +11,7 @@ public class SpawnManager : MonoBehaviour
     public GameObject MyEntity {get; private set;}
     
     private void Awake() {
+        Application.targetFrameRate = 60; // 최적화 한척
         if (instance == null) {
             instance = this;
         } else {
