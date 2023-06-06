@@ -20,6 +20,7 @@ public class PlayerAddPacket {
 
 public class SyncManager : MonoBehaviour
 {
+    [SerializeField] TMPro.TextMeshProUGUI NameTag; // 뜬금없지만 그냥 넣음
     public static Dictionary<string, GameObject> PlayerEntity {get; private set;}
 
     private void Awake() {
@@ -120,5 +121,8 @@ public class SyncManager : MonoBehaviour
     }
 
     // 서버에서 내꺼 스코어 추가하래
-    void MyScoreAdd(JsonData data) => ScoreboardManager.Create((string)data["id"], (string)data["name"], true);
+    void MyScoreAdd(JsonData data) {
+        NameTag.text = (string)data["name"];
+        ScoreboardManager.Create((string)data["id"], (string)data["name"], true);
+    }
 }
