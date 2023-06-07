@@ -98,6 +98,8 @@ public class WeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Cursor.lockState == CursorLockMode.None) return; // 채팅켜고 있으면 안도ㅔ엠
+
         for (int i = 0; i < Weapons.Length; i++)
         {
             var Weapon = Weapons[i];
@@ -110,7 +112,7 @@ public class WeaponManager : MonoBehaviour
                 }
             }
         }
-
+        
         var SelectWeapon = Weapons[CurrentWeaponID];
         // 총 쏘기
         if (Input.GetMouseButton(0) && (Time.time - SelectWeapon.FireTime) /* 총 쏜 시간으로부터 얼마나 지남 */ > SelectWeapon.FireDelay && ReloadThread == null /* 재장전중이 아님 */) {

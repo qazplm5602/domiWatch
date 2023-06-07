@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
         {
             // 위, 아래 움직임 셋팅. 
             MoveDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            if (PlayerHealth.instance.isDie)
+            if (PlayerHealth.instance.isDie || Cursor.lockState == CursorLockMode.None)
                 MoveDir = Vector3.zero;
  
             // 벡터를 로컬 좌표계 기준에서 월드 좌표계 기준으로 변환한다.
@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
             MoveDir *= speed;
  
             // 캐릭터 점프 / 안죽어있으면
-            if (Input.GetButton("Jump") && !PlayerHealth.instance.isDie)
+            if (Input.GetButton("Jump") && !PlayerHealth.instance.isDie && Cursor.lockState != CursorLockMode.None)
                 MoveDir.y = jumpSpeed;
  
         }
@@ -71,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
         // 캐릭터 움직임.
         controller.Move(MoveDir * Time.deltaTime);
 
-        if (PlayerHealth.instance.isDie) return; // 죽어있으면 아래 코드는 실행하지 않음
+        if (PlayerHealth.instance.isDie || Cursor.lockState == CursorLockMode.None) return; // 죽어있으면 아래 코드는 실행하지 않음 (채팅 키고 있을떄도)
 
         // Get mouse movement inputs
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
