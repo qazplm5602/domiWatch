@@ -5,8 +5,8 @@ global.TriggerEvent = {};
 // 스크륍트
 const UserManager = require("./lib/UserManager.js");
 const LoginSys = require("./scripts/LoginSystem.js");
-require("./scripts/testScript.js");
 require("./scripts/room/RoomMain.js");
+require("./scripts/JoinLeft.js");
 
 const server = net.createServer(function(socket) {
     ////////// socket 초기화 //////////

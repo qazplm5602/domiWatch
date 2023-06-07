@@ -47,6 +47,22 @@ TriggerEvent["Room.Join"] = function(id) {
             });
         }
     }
+
+    console.log("[RoomMain] "+Player.name+"님이 게임에서 입장하였습니다.");
+}
+
+// 방 나가는건 플레이어가 강종했을수도 있음
+TriggerEvent["Room.Left"] = function(id, old_name) {
+    // 머야 왜업성
+    if (global.RoomPlayers[id] === undefined) return;
+
+    const Cache_RoomPlayer = global.RoomPlayers[id];
+    delete global.RoomPlayers[id];
+
+    let Player_Name = Players[id] === undefined ? old_name : Players[id].name;
+    console.log("[RoomMain] "+Player_Name+"님이 게임에서 퇴장하였습니다.");
+
+    
 }
 
 // setInterval(() => {

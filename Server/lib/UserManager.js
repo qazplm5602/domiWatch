@@ -21,9 +21,11 @@ exports.AddPlayer = function(id, name, ws) {
 
 // 플레이어 삭제 (반환: 없지롱)
 exports.RemovePlayer = function(id) {
+    const Cache_Player = global.Players[String(id)]; // 전 내용
+    delete global.Players[String(id)];
+
+    // 이벤트
     const cb = TriggerEvent["system.PlayerLeave"];
     if (typeof(cb) === "function")
-        cb(String(id));
-
-    delete global.Players[String(id)];
+        cb(String(id), Cache_Player);
 }
