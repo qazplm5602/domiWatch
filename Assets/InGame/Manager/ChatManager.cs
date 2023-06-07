@@ -9,7 +9,10 @@ public class ChatManager : MonoBehaviour
 {
     [SerializeField] GameObject ChatMain;
     [SerializeField] GameObject ChatBox;
+    [SerializeField] Transform ChatContent;
     [SerializeField] GameObject InputBox;
+
+    [SerializeField] GameObject MessageBox;
 
     bool isActive = false;
     bool isShow = false;
@@ -65,5 +68,11 @@ public class ChatManager : MonoBehaviour
 
         // 입력창 비활
         InputBox.SetActive(false);
+    }
+
+    public void AddChatMessage(string value) {
+        ChatShow();
+        var Message = Instantiate(MessageBox, Vector3.zero, Quaternion.identity, ChatContent);
+        Message.GetComponent<TextMeshProUGUI>().text = value;
     }
 }
