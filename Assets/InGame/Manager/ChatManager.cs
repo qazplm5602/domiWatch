@@ -12,10 +12,19 @@ public class ChatManager : MonoBehaviour
     [SerializeField] GameObject InputBox;
 
     bool isActive = false;
+    bool isShow = false;
+    float HideTime = 0;
 
     private void Update() {
+        if (isShow) {
+            if (isActive) HideTime = 0;
+            else if (HideTime >= 5) ChatHide();
+            else HideTime += Time.deltaTime;
+        }
+
         if (Input.GetKeyDown(KeyCode.Return) && !isActive) {
             isActive = true;
+            ChatShow();
 
             // 커서 설정
             Cursor.lockState = CursorLockMode.None;
@@ -29,17 +38,32 @@ public class ChatManager : MonoBehaviour
             InputBox.GetComponent<TMP_InputField>().ActivateInputField();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) && isActive) {
-            isActive = false;
+        if (Input.GetKeyDown(KeyCode.Escape) && isActive) InputDeSelected();
+    }
 
-            // 커서 설정
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+    void ChatHide() {
+        isShow = false;
+        ChatMain.GetComponent<CanvasGroup>().DOFade(0, .2f).OnComplete(() => ChatMain.SetActive(false));
+    }
 
-            ChatBox.GetComponent<Image>().DOFade(0, .2f);
+    void ChatShow() {
+        if (isShow) return;
 
-            // 입력창 비활
-            InputBox.SetActive(false);
-        }
+        isShow = true;
+        ChatMain.SetActive(true);
+        ChatMain.GetComponent<CanvasGroup>().DOFade(1, .2f);
+    }
+
+    public void InputDeSelected() {
+        isActive = false;
+
+        // 커서 설정
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        ChatBox.GetComponent<Image>().DOFade(0, .2f);
+
+        // 입력창 비활
+        InputBox.SetActive(false);
     }
 }
