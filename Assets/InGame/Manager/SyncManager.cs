@@ -27,6 +27,7 @@ public class SyncManager : MonoBehaviour
         PlayerEntity = new();
         NetworkCore.EventListener["Room.ResultAllPlayer"] = AllPlayerSync;
         NetworkCore.EventListener["Room.PlayerAdd"] = PlayerAdd;
+        NetworkCore.EventListener["Room.PlayerRemove"] = PlayerRemove;
         NetworkCore.EventListener["Room.PlayerUpdate"] = ResultPlayerUpdate;
         NetworkCore.EventListener["Room.PlayerSetCoords"] = MyCoordSet;
         NetworkCore.EventListener["Room.ScoreAddMY"] = MyScoreAdd;
@@ -37,6 +38,7 @@ public class SyncManager : MonoBehaviour
         PlayerEntity = null;
         NetworkCore.EventListener.Remove("Room.ResultAllPlayer");
         NetworkCore.EventListener.Remove("Room.PlayerAdd");
+        NetworkCore.EventListener.Remove("Room.PlayerRemove");
         NetworkCore.EventListener.Remove("Room.PlayerUpdate");
         NetworkCore.EventListener.Remove("Room.PlayerSetCoords");
         NetworkCore.EventListener.Remove("Room.ScoreAddMY");
@@ -92,6 +94,20 @@ public class SyncManager : MonoBehaviour
 
         // 스코어보드 추가
         ScoreboardManager.Create(PlayerInfo.id, PlayerInfo.name, false);
+    }
+
+    // 허걱, 플레이어가 나갔다
+    void PlayerRemove(JsonData id) {
+        string PlayerID = (string)id;
+
+        // 캐릭터 삭제
+        if (PlayerEntity.TryGetValue(PlayerID, out var PlayerObj)) {
+            Destroy(PlayerObj);
+            PlayerEntity.Remove(PlayerID);
+        }
+
+        // 스코어보드 삭제
+        ScoreboardManager.Remove(PlayerID);
     }
 
     // 서버에서 플레이어 좌표를 업뎃 해달라고 요청했지롱

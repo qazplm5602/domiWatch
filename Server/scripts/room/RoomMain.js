@@ -57,12 +57,16 @@ TriggerEvent["Room.Left"] = function(id, old_name) {
     if (global.RoomPlayers[id] === undefined) return;
 
     const Cache_RoomPlayer = global.RoomPlayers[id];
-    delete global.RoomPlayers[id];
+    delete global.RoomPlayers[id]; // 방에서 나갓
 
     let Player_Name = Players[id] === undefined ? old_name : Players[id].name;
     console.log("[RoomMain] "+Player_Name+"님이 게임에서 퇴장하였습니다.");
 
-    
+    // 방안에 있는 사람한테 다 알려주쟈
+    for (const PlayerID in global.RoomPlayers) {
+        const Player = Players[PlayerID];
+        Player.socket.send("Room.PlayerRemove", id);
+    }
 }
 
 // setInterval(() => {
