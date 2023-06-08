@@ -8,8 +8,8 @@ TriggerEvent["Room.GetAllPlayer"] = function(id) {
     let SendPlayers = [];
 
     for (const PlayerID in RoomPlayers) {
+        const originPlayer = Players[PlayerID];
         if (id !== PlayerID) { // (테스트로 일단 비활)
-            const originPlayer = Players[PlayerID];
             const Player = RoomPlayers[PlayerID];
             SendPlayers.push({
                 id: PlayerID,
@@ -22,6 +22,9 @@ TriggerEvent["Room.GetAllPlayer"] = function(id) {
                 score_death: Player.Score.death,
             });
         }
+        
+        // 접속 안내
+        originPlayer.socket.send("Room.MessageAdd", `<color=#E5D85C>[${Player.name}] 님이 접속하였습니다.</color>`);
     }
 
     Player.socket.send("Room.ScoreAddMY", { id: id, name: Player.name }); // 자기자신 스코어보드 추가

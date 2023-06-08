@@ -18,6 +18,13 @@ public class ChatManager : MonoBehaviour
     bool isShow = false;
     float HideTime = 0;
 
+    private void Awake() {
+        NetworkCore.EventListener["Room.MessageAdd"] = NetMessageAdd;
+    }
+    private void OnDestroy() {
+        NetworkCore.EventListener.Remove("Room.MessageAdd");
+    }
+
     private void Update() {
         if (isShow) {
             if (isActive) HideTime = 0;
@@ -50,6 +57,7 @@ public class ChatManager : MonoBehaviour
     }
 
     void ChatShow() {
+        HideTime = 0;
         if (isShow) return;
 
         isShow = true;
@@ -70,6 +78,7 @@ public class ChatManager : MonoBehaviour
         InputBox.SetActive(false);
     }
 
+    void NetMessageAdd(LitJson.JsonData data) => AddChatMessage((string)data);
     public void AddChatMessage(string value) {
         ChatShow();
         var Message = Instantiate(MessageBox, Vector3.zero, Quaternion.identity, ChatContent);

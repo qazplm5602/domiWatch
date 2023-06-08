@@ -14,6 +14,7 @@ class RoomInterface {
 require("./RoomSync.js");
 require("./RoomWeapon.js");
 require("./RoomHealth.js");
+require("./RoomChat.js");
 
 // global.RoomPlayers["qazplm5602"] = {
 //     coords: [0,0,0],
@@ -66,6 +67,7 @@ TriggerEvent["Room.Left"] = function(id, old_name) {
     for (const PlayerID in global.RoomPlayers) {
         const Player = Players[PlayerID];
         Player.socket.send("Room.PlayerRemove", id);
+        Player.socket.send("Room.MessageAdd", `<color=#F15F5F>[${old_name}] 님이 나가셨습니다.</color>`);
     }
 }
 
