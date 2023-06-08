@@ -21,6 +21,7 @@ public class PlayerAddPacket {
 public class SyncManager : MonoBehaviour
 {
     [SerializeField] TMPro.TextMeshProUGUI NameTag; // 뜬금없지만 그냥 넣음
+    bool ReadyGame = false;
     public static Dictionary<string, GameObject> PlayerEntity {get; private set;}
 
     private void Awake() {
@@ -82,10 +83,14 @@ public class SyncManager : MonoBehaviour
             ScoreboardManager.EditText(ScoreboardManager.TextMode.Kill, PlayerData.id, PlayerData.score_kill.ToString());
             ScoreboardManager.EditText(ScoreboardManager.TextMode.Death, PlayerData.id, PlayerData.score_death.ToString());
         }
+
+        ReadyGame = true;
     }
 
     // 서버에서 플레이어 추가해달라고 함
     void PlayerAdd(JsonData data) {
+        if (!ReadyGame) return; // 준비 안됐엉
+
         var PlayerInfo = JsonMapper.ToObject<PlayerAddPacket>(data.ToJson());
         GameObject PlayerObj = SpawnManager.instance.SpawnPlayer("VanguardChoonyung");
         PlayerObj.tag = "Player";
