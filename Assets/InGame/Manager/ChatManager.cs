@@ -11,6 +11,7 @@ public class ChatManager : MonoBehaviour
     [SerializeField] GameObject ChatBox;
     [SerializeField] Transform ChatContent;
     [SerializeField] GameObject InputBox;
+    [SerializeField] ScrollRect scrollRect;
 
     [SerializeField] GameObject MessageBox;
 
@@ -32,7 +33,7 @@ public class ChatManager : MonoBehaviour
             else HideTime += Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.Return) && !isActive) {
+        if (Input.GetKeyUp(KeyCode.Return) && !isActive) {
             isActive = true;
             ChatShow();
 
@@ -46,7 +47,10 @@ public class ChatManager : MonoBehaviour
             InputBox.SetActive(true);
             InputBox.GetComponent<TMP_InputField>().text = ""; // 입력값 초기화 ㄱㄱ
             InputBox.GetComponent<TMP_InputField>().ActivateInputField();
+            return;
         }
+
+        if (Input.GetKeyUp(KeyCode.Return) && isActive) SendChatMessage();
 
         if (Input.GetKeyDown(KeyCode.Escape) && isActive) InputDeSelected();
     }
@@ -78,9 +82,25 @@ public class ChatManager : MonoBehaviour
         InputBox.SetActive(false);
     }
 
+    void SendChatMessage() {
+        var InputField = InputBox.GetComponent<TMP_InputField>();
+        if (InputField.text.Length <= 0) { // 아무것도 입력 안하면 닫아야징
+            InputDeSelected();
+            return;
+        }
+
+        // 서버한테 보냉
+        // NetworkCore.Send("Room.SendMessage", InputField.text);
+        AddChatMessage(InputField.text); // 테스트
+        InputField.text = ""; // 입력 값 없어져람
+        InputField.Select(); // 다시 입력창 포커수
+        InputField.ActivateInputField();
+    }
+
     void NetMessageAdd(LitJson.JsonData data) => AddChatMessage((string)data);
     public void AddChatMessage(string value) {
         ChatShow();
+        print(scrollRect.verticalNormalizedPosition);
         var Message = Instantiate(MessageBox, Vector3.zero, Quaternion.identity, ChatContent);
         Message.GetComponent<TextMeshProUGUI>().text = value;
     }

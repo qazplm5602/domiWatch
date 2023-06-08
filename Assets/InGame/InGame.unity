@@ -11370,8 +11370,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0f5675cf18ee6a94691239cb761bb01f, type: 2}
+  m_sharedMaterial: {fileID: 5257566636843172209, guid: 0f5675cf18ee6a94691239cb761bb01f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -20026,8 +20026,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter text...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0f5675cf18ee6a94691239cb761bb01f, type: 2}
+  m_sharedMaterial: {fileID: 5257566636843172209, guid: 0f5675cf18ee6a94691239cb761bb01f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -20919,19 +20919,7 @@ MonoBehaviour:
       m_Calls: []
   m_OnDeselect:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 880374872}
-        m_TargetAssemblyTypeName: ChatManager, Assembly-CSharp
-        m_MethodName: InputDeSelected
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_OnTextSelection:
     m_PersistentCalls:
       m_Calls: []
@@ -20952,7 +20940,7 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_RichText: 1
-  m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_GlobalFontAsset: {fileID: 11400000, guid: 0f5675cf18ee6a94691239cb761bb01f, type: 2}
   m_OnFocusSelectAll: 1
   m_ResetOnDeActivation: 1
   m_RestoreOriginalTextOnEscape: 1
@@ -23018,7 +23006,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 200650319}
   m_HandleRect: {fileID: 200650318}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -24333,6 +24321,7 @@ MonoBehaviour:
   ChatBox: {fileID: 707950720}
   ChatContent: {fileID: 115824828}
   InputBox: {fileID: 763582261}
+  scrollRect: {fileID: 707950722}
   MessageBox: {fileID: 2649813376913570597, guid: 292ce28f3b86908479a939b0a1c03df7, type: 3}
 --- !u!1001 &880927272
 PrefabInstance:
