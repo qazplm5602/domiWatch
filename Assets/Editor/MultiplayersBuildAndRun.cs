@@ -44,12 +44,17 @@ public class MultiplayersBuildAndRun
 
 	static string[] GetScenePaths()
 	{
-		string[] scenes = new string[EditorBuildSettings.scenes.Length];
+		// string[] scenes = new string[EditorBuildSettings.scenes.Length];
 
-		for (int i = 0; i < scenes.Length; i++)
-		{
-			scenes[i] = EditorBuildSettings.scenes[i].path;
-		}
+		// for (int i = 0; i < scenes.Length; i++)
+		// {
+		// 	scenes[i] = EditorBuildSettings.scenes[i].path;
+		// }
+		string[] scenes = new[] {
+			"Assets/Scenes/Login.unity",
+			"Assets/Scenes/Lobby.unity",
+			"Assets/InGame/InGame.unity",
+		};
 
 		return scenes;
 	}
