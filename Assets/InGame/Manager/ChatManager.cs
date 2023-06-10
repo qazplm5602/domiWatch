@@ -90,8 +90,8 @@ public class ChatManager : MonoBehaviour
         }
 
         // 서버한테 보냉
-        // NetworkCore.Send("Room.SendMessage", InputField.text);
-        AddChatMessage(InputField.text); // 테스트
+        NetworkCore.Send("Room.SendMessage", InputField.text);
+        // AddChatMessage(InputField.text); // 테스트
         InputField.text = ""; // 입력 값 없어져람
         InputField.Select(); // 다시 입력창 포커수
         InputField.ActivateInputField();
@@ -102,8 +102,13 @@ public class ChatManager : MonoBehaviour
         ChatShow();
         var Message = Instantiate(MessageBox, Vector3.zero, Quaternion.identity, ChatContent);
         Message.GetComponent<TextMeshProUGUI>().text = value;
-        
-        Canvas.ForceUpdateCanvases(); // 일단 업뎃 ㄱㄱ
+
+         // 일단 업뎃 ㄱㄱ
+        Canvas.ForceUpdateCanvases();
+        ChatContent.GetComponent<VerticalLayoutGroup>().CalculateLayoutInputHorizontal();
+        ChatContent.GetComponent<VerticalLayoutGroup>().CalculateLayoutInputVertical();
+        ChatContent.GetComponent<VerticalLayoutGroup>().SetLayoutHorizontal();
+        ChatContent.GetComponent<VerticalLayoutGroup>().SetLayoutVertical();
 
         // 맨 밑으로 내림
         scrollRect.verticalNormalizedPosition = 0;
