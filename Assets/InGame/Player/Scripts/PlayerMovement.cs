@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     public float mouseSensitivity = 3f;
  
     private CharacterController controller; // 현재 캐릭터가 가지고있는 캐릭터 컨트롤러 콜라이더.
+    PlayerWalkAudio walkAudio;
     private Vector3 MoveDir;                // 캐릭터의 움직이는 방향.
     private float verticalRotation = 0f;
 
@@ -36,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     
     private void Awake() {
         controller = GetComponent<CharacterController>();
+        walkAudio = GetComponent<PlayerWalkAudio>();
         speed     = 6.0f;
         jumpSpeed = 8.0f;
         gravity   = 20.0f;
@@ -67,6 +69,9 @@ public class PlayerMovement : MonoBehaviour
  
         // 캐릭터에 중력 적용.
         MoveDir.y -= gravity * Time.deltaTime;
+
+        if (walkAudio != null)
+            walkAudio.isWalk = MoveDir.x != 0 || MoveDir.z != 0;
  
         // 캐릭터 움직임.
         controller.Move(MoveDir * Time.deltaTime);

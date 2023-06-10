@@ -14,6 +14,8 @@ public class PlayerSyncMove : MonoBehaviour
     bool isWalk = false;
     float WalkDisable;
 
+    PlayerWalkAudio WalkSoundsManager;
+
     [SerializeField, Tooltip("팔이 회전할때 클수록 더 부드러워짐")]
     float rotationSpeed = 40f; // 회전 속도
     [SerializeField, Tooltip("캐릭터가 움직일때 클수록 더 반영이 빠르지만 너무 드드득 하지롱")]
@@ -22,6 +24,7 @@ public class PlayerSyncMove : MonoBehaviour
     private void Awake() {
         EntityInfo = GetComponent<PlayerInfo>();
         anim = GetComponent<Animator>();
+        WalkSoundsManager = GetComponent<PlayerWalkAudio>();
     }
 
     private void Update() {
@@ -44,6 +47,7 @@ public class PlayerSyncMove : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, LastCoords.Value, Time.deltaTime * MoveSpeed);
 
             bool isPlayerMove = Mathf.Abs(transform.position.x - LastCoords.Value.x) > 0.05f || Mathf.Abs(transform.position.z - LastCoords.Value.z) > 0.05f;
+            bool Cache_isWalk = isWalk;
 
             if (isWalk && isPlayerMove) {
                 WalkDisable = Time.time;
@@ -51,6 +55,9 @@ public class PlayerSyncMove : MonoBehaviour
             else if (isWalk && !isPlayerMove && (Time.time - WalkDisable) >= 0.1f) {
                 isWalk = false;
             }
+
+            if (Cache_isWalk != isWalk && WalkSoundsManager != null) // 동작이 바뀜
+                WalkSoundsManager.isWalk = isWalk;
 
             anim.SetBool("isWalk", isWalk); // 이동할 좌표랑 현재랑 거리
         }
