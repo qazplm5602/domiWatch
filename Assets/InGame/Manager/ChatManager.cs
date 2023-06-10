@@ -100,8 +100,12 @@ public class ChatManager : MonoBehaviour
     void NetMessageAdd(LitJson.JsonData data) => AddChatMessage((string)data);
     public void AddChatMessage(string value) {
         ChatShow();
-        print(scrollRect.verticalNormalizedPosition);
         var Message = Instantiate(MessageBox, Vector3.zero, Quaternion.identity, ChatContent);
         Message.GetComponent<TextMeshProUGUI>().text = value;
+        
+        Canvas.ForceUpdateCanvases(); // 일단 업뎃 ㄱㄱ
+
+        // 맨 밑으로 내림
+        scrollRect.verticalNormalizedPosition = 0;
     }
 }
