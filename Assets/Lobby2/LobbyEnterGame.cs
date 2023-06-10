@@ -12,7 +12,7 @@ public class LobbyEnterGame : MonoBehaviour
     private void Awake() {
         loadUI_Trnasform = loadUI.GetComponent<RectTransform>();
         NetworkCore.EventListener["Room.ClientInit"] = (LitJson.JsonData _) => {
-            SceneManager.LoadSceneAsync(0);
+            SceneManager.LoadSceneAsync(2);
         };
     }
 
