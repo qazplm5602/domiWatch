@@ -22,6 +22,7 @@ public class PlayerHealth : MonoBehaviour
     [Header("자신 플레이어")]
     [SerializeField] int DefualtHealth = 200;
     [SerializeField] Image HealthBar;
+    [SerializeField] TextMeshProUGUI HealthCount;
     
     [Header("킬로그 설정")]
     [SerializeField] Transform KillLog_List;
@@ -81,6 +82,7 @@ public class PlayerHealth : MonoBehaviour
         } else {
             HealthBar.color = Color.white;
         }
+        HealthCount.text = health.ToString();
     }
 
     void OnDie() {
