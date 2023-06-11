@@ -86,12 +86,12 @@ public class NetworkCore : MonoBehaviour
             return;
         }
 
-        print("[domi Network] 아이피 주소 검사");
-        System.Net.IPAddress ServerAdress;
-        if (!System.Net.IPAddress.TryParse(ServerIP, out ServerAdress)) {
-            Debug.LogError("[domi Network] 아이피 주소가 잘못되었습니다.");
-            return;
-        }
+        // print("[domi Network] 아이피 주소 검사");
+        // System.Net.IPAddress ServerAdress;
+        // if (!System.Net.IPAddress.TryParse(ServerIP, out ServerAdress)) {
+        //     Debug.LogError("[domi Network] 아이피 주소가 잘못되었습니다.");
+        //     return;
+        // }
 
         print("[domi Network] 서버 연결 시도");
         client = new TcpClient();
