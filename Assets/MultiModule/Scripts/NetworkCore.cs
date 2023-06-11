@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using LitJson;
 
 // 데이터 형식
@@ -51,8 +52,10 @@ public class NetworkCore : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else
+        else {
+            Destroy(gameObject);
             throw new System.Exception("[domi Network] 네트워크 코어는 하나의 오브젝트 안에서만 구성해야 합니다.");
+        }
 
         // 연결 끊김 사유
         NetworkCore.EventListener["disconnect.why"] = (JsonData why) => {
@@ -177,6 +180,8 @@ public class NetworkCore : MonoBehaviour
     void OnDisconnect() {
         client = null; // connection 지움
         EventDisconnect?.Invoke(WhyDisconnect); // 이벤트 실행
+        // 다시 로비로 돌아가자
+        SceneManager.LoadScene(0);
     }
 
     ////////////////// 코루틴 //////////////////
