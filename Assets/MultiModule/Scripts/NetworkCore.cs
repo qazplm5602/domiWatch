@@ -181,7 +181,8 @@ public class NetworkCore : MonoBehaviour
         client = null; // connection 지움
         EventDisconnect?.Invoke(WhyDisconnect); // 이벤트 실행
         // 다시 로비로 돌아가자
-        SceneManager.LoadScene(0);
+        if (SceneManager.GetActiveScene().buildIndex != 0) // 로비가 아니면 로비로 감 (로비면 그냥 있음)
+            SceneManager.LoadScene(0);
     }
 
     ////////////////// 코루틴 //////////////////
