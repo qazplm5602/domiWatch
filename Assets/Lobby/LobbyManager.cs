@@ -28,6 +28,7 @@ public class LobbyManager : MonoBehaviour
 
     // 서버 연결 성공여부
     bool isConnect = false;
+    public static string WhyDisconnect = null;
 
     private void Awake() {
         NetworkCore.EventConnect += SuccessConnect;
@@ -43,6 +44,11 @@ public class LobbyManager : MonoBehaviour
         Cursor.visible = true;
 
         PlayButton.GetComponent<LobbyButton>().SetLock();
+
+        if (WhyDisconnect != null) {
+            ErrorConnect(WhyDisconnect);
+            WhyDisconnect = null;
+        }
     }
 
     // 리스너 해제
@@ -104,6 +110,11 @@ public class LobbyManager : MonoBehaviour
     }
 
     void ErrorConnect(string Why) {
+        if (WhyDisconnect != null) {
+            // 입력란 삭제
+            InputUI.GetComponent<CanvasGroup>().DOFade(0, .2f).OnComplete(() => InputUI.SetActive(false));
+        }
+
         // 에러 표시
         ErrorUI.SetActive(true);
         ErrorUI.GetComponent<CanvasGroup>().DOFade(1, .2f);
