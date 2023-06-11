@@ -112,6 +112,12 @@ const server = net.createServer(function(socket) {
             return;
         }
 
+        // 누군가 이미 접속되어있음
+        if (Players[String(ID)] !== undefined) {
+            socket.kick("다른 클라이언트에서 접속중입니다.");
+            return;
+        }
+
         // 문을 열어주쟈
         SocketEvent_Init(result.id);
         // 로그인 성공!
