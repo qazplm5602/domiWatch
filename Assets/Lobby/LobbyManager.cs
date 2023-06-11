@@ -38,6 +38,10 @@ public class LobbyManager : MonoBehaviour
         Password_Input = InputUI.transform.Find("Password_Input").GetComponent<TMP_InputField>();
     }
     private void Start() {
+        // 커서 설정
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         PlayButton.GetComponent<LobbyButton>().SetLock();
     }
 
