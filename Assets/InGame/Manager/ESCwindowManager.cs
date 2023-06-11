@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ESCwindowManager : MonoBehaviour
 {
@@ -21,5 +22,18 @@ public class ESCwindowManager : MonoBehaviour
                 Cursor.visible = false;
             }
         }
+    }
+
+    ////////// 버튼 hanlder... //////////
+    public void RoomLeave() {
+        NetworkCore.Send("Room.Left", null);
+        SceneManager.LoadScene(1);
+    }
+    public void GameExit() {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false; // 꺼
+        #else
+            Application.Quit();
+        #endif
     }
 }
