@@ -5,6 +5,7 @@ exports.Login = async function(id, Password) {
     const db = await SQL.GetObject();
 
     let [err, account] = await db.Aget("SELECT * FROM Account WHERE id = ?", id);
+    db.close(); // connection 닫기
 
     if (err)
         return {err:"데이터 불러오는데 실패하였습니다."};
