@@ -15,6 +15,7 @@ public class LobbyHeaderMenu : MonoBehaviour
     private void Awake() {
         MenuCallback.Add(MainMenu);
         MenuCallback.Add(PlayMenu);
+        MenuCallback.Add(SettingScreen);
 
         PlayPanel_Transform = PlayPanel.GetComponent<RectTransform>();
     }
@@ -49,5 +50,9 @@ public class LobbyHeaderMenu : MonoBehaviour
 
     void MainMenu() {
         
+    }
+
+    void SettingScreen() {
+        print("설정창!");
     }
 }
