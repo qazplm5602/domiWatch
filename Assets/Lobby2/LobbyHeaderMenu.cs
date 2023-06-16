@@ -10,7 +10,9 @@ public class LobbyHeaderMenu : MonoBehaviour
     List<UnityAction> MenuCallback = new();
     int ActiveMenu = 0;
     [SerializeField] GameObject PlayPanel;
+    [SerializeField] GameObject SettingPanel;
     RectTransform PlayPanel_Transform;
+    RectTransform SettingPanel_Transform;
 
     private void Awake() {
         MenuCallback.Add(MainMenu);
@@ -18,6 +20,7 @@ public class LobbyHeaderMenu : MonoBehaviour
         MenuCallback.Add(SettingScreen);
 
         PlayPanel_Transform = PlayPanel.GetComponent<RectTransform>();
+        SettingPanel_Transform = SettingPanel.GetComponent<RectTransform>();
     }
 
     public void MenuClick(int index) {
@@ -35,11 +38,19 @@ public class LobbyHeaderMenu : MonoBehaviour
 
     void AllReset() {
         // 플레이 창 끄기
-        if (PlayPanel.activeSelf)
+        if (PlayPanel.activeSelf) {
             PlayPanel_Transform.offsetMin = new Vector2(PlayPanel_Transform.offsetMin.x, -200);
             PlayPanel_Transform.offsetMax = new Vector2(PlayPanel_Transform.offsetMax.x, 0);
             PlayPanel.GetComponent<CanvasGroup>().alpha = 0;
             PlayPanel.SetActive(false);
+        }
+        // 설정 창 끄기
+        if (SettingPanel.activeSelf) {
+            SettingPanel_Transform.offsetMin = new Vector2(SettingPanel_Transform.offsetMin.x, 0);
+            SettingPanel_Transform.offsetMax = new Vector2(SettingPanel_Transform.offsetMax.x, -145);
+            SettingPanel.GetComponent<CanvasGroup>().alpha = 0;
+            SettingPanel.SetActive(false);
+        }
     }
 
     void PlayMenu() {
@@ -53,6 +64,8 @@ public class LobbyHeaderMenu : MonoBehaviour
     }
 
     void SettingScreen() {
-        print("설정창!");
+        SettingPanel.SetActive(true);
+        SettingPanel_Transform.DOAnchorPosY(-55, 0.3f).SetEase(Ease.OutQuad);
+        SettingPanel_Transform.GetComponent<CanvasGroup>().DOFade(1, 0.3f).SetEase(Ease.OutQuad);
     }
 }
