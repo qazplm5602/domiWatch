@@ -14,6 +14,7 @@ public class domiWeapon {
     public int Damage;
     public float FireDelay; // 총 빵빵 대기시간
     public float ReloadDelay; // 총 재장전 대기시간
+    public float Recoil; // 반동
     public KeyCode SlotKey;
     public AudioClip ShotSound;
     
@@ -141,6 +142,8 @@ public class WeaponManager : MonoBehaviour
             Animator WeaponAnim = WeaponEntity.GetComponent<Animator>();
             if (WeaponAnim)
                 WeaponAnim.SetTrigger("onShot");
+            // 화면도
+            SpawnManager.instance.MyEntity.GetComponent<PlayerMovement>().SetMouse(-SelectWeapon.Recoil);
 
             // 서버한테 알리기
             NetworkCore.Send("Room.BulletCreate", new domiWeaponPacket(CurrentWeaponID, SelectWeapon.ShotCoords.position, Direcrtion));

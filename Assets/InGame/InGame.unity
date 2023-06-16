@@ -24785,6 +24785,7 @@ MonoBehaviour:
     Damage: 50
     FireDelay: 1
     ReloadDelay: 3
+    Recoil: 2
     SlotKey: 49
     ShotSound: {fileID: 8300000, guid: 65201ddabb4144f6a8fb9480120b7656, type: 3}
     FireTime: 0
@@ -24797,6 +24798,7 @@ MonoBehaviour:
     Damage: 100
     FireDelay: 1
     ReloadDelay: 3
+    Recoil: 0
     SlotKey: 50
     ShotSound: {fileID: 0}
     FireTime: 0
@@ -24809,6 +24811,7 @@ MonoBehaviour:
     Damage: 10
     FireDelay: 0.1
     ReloadDelay: 5
+    Recoil: 0.5
     SlotKey: 51
     ShotSound: {fileID: 8300000, guid: 65201ddabb4144f6a8fb9480120b7656, type: 3}
     FireTime: 0

@@ -91,6 +91,7 @@ public class PlayerMovement : MonoBehaviour
         transform.Rotate(Vector3.up * mouseX);
     }
 
+    public void SetMouse(float value) => verticalRotation += value;
     public void SetCoords(Vector3 coords) {
         controller.enabled = false;
         transform.position = coords;
