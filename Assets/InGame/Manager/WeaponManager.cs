@@ -186,6 +186,12 @@ public class WeaponManager : MonoBehaviour
         AudioComponent.maxDistance = 50; // 최대 거리
         AudioComponent.Play();
 
+        // 총 반동추가 (?)
+        var WeaponEntity = SpawnManager.instance.MyEntity.GetComponent<PlayerInfo>().HandHandler.transform.GetChild(0);
+        Animator WeaponAnim = WeaponEntity.GetComponent<Animator>();
+        if (WeaponAnim)
+            WeaponAnim.SetTrigger("onShot");
+
         // 자동 삭제
         StartCoroutine(AudioAutoRemove(AudioComponent, SoundObj));
     }
