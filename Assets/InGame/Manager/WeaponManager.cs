@@ -136,6 +136,12 @@ public class WeaponManager : MonoBehaviour
             FireEffect.transform.localEulerAngles = SelectWeapon.FireEffect.transform.localEulerAngles;
             FireEffect.AddComponent<AutoRemoveEntity>().DelayRemove = .2f; // 자동 삭제ㅔㅔㅔ
 
+            // 총 반동추가 (?)
+            var WeaponEntity = SpawnManager.instance.MyEntity.GetComponent<PlayerInfo>().HandHandler.transform.GetChild(0);
+            Animator WeaponAnim = WeaponEntity.GetComponent<Animator>();
+            if (WeaponAnim)
+                WeaponAnim.SetTrigger("onShot");
+
             // 서버한테 알리기
             NetworkCore.Send("Room.BulletCreate", new domiWeaponPacket(CurrentWeaponID, SelectWeapon.ShotCoords.position, Direcrtion));
         }
@@ -185,12 +191,6 @@ public class WeaponManager : MonoBehaviour
             AudioComponent.spatialBlend = 1; // 3d 오디오오오
         AudioComponent.maxDistance = 50; // 최대 거리
         AudioComponent.Play();
-
-        // 총 반동추가 (?)
-        var WeaponEntity = SpawnManager.instance.MyEntity.GetComponent<PlayerInfo>().HandHandler.transform.GetChild(0);
-        Animator WeaponAnim = WeaponEntity.GetComponent<Animator>();
-        if (WeaponAnim)
-            WeaponAnim.SetTrigger("onShot");
 
         // 자동 삭제
         StartCoroutine(AudioAutoRemove(AudioComponent, SoundObj));
