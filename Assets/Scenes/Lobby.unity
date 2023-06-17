@@ -1698,7 +1698,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -290, y: 0}
-  m_SizeDelta: {x: 71.7, y: 50}
+  m_SizeDelta: {x: 110, y: 50}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &623641283
 MonoBehaviour:
@@ -1809,6 +1809,7 @@ GameObject:
   - component: {fileID: 756032276}
   - component: {fileID: 756032274}
   - component: {fileID: 756032275}
+  - component: {fileID: 756032278}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1872,6 +1873,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &756032278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 756032273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46108c5a005370041936ad3b36e108e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: fa2a888139f472b47971f983ead2807c, type: 2}
+  SliderList:
+  - slider: {fileID: 1189228135}
+    text: {fileID: 623641283}
+  - slider: {fileID: 1971568195}
+    text: {fileID: 1312839410}
 --- !u!1 &777096515
 GameObject:
   m_ObjectHideFlags: 0
@@ -3274,7 +3293,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 756032278}
+        m_TargetAssemblyTypeName: LobbyAudioAdmin, Assembly-CSharp
+        m_MethodName: ChangeVolume
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1205911495
 GameObject:
   m_ObjectHideFlags: 0
@@ -3551,7 +3582,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -290, y: 0}
-  m_SizeDelta: {x: 71.7, y: 50}
+  m_SizeDelta: {x: 110, y: 50}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1312839410
 MonoBehaviour:
@@ -5291,7 +5322,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 756032278}
+        m_TargetAssemblyTypeName: LobbyAudioAdmin, Assembly-CSharp
+        m_MethodName: ChangeVolume
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1981307904
 GameObject:
   m_ObjectHideFlags: 0

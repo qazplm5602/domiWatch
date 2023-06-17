@@ -61,6 +61,7 @@ public class WeaponManager : MonoBehaviour
     
     int CurrentWeaponID; // 들고있는거
     [SerializeField, Tooltip("피 튀기는 이펙")] GameObject BloodEffect;
+    [SerializeField] UnityEngine.Audio.AudioMixerGroup AudioOutput; 
     [Header("UI")]
     [SerializeField] TextMeshProUGUI MaxWeaponAmmo;
     [SerializeField] TextMeshProUGUI CurrnetWeaponAmmo;
@@ -188,6 +189,7 @@ public class WeaponManager : MonoBehaviour
         var AudioComponent = SoundObj.AddComponent<AudioSource>();
         AudioComponent.playOnAwake = false;
         AudioComponent.loop = false;
+        AudioComponent.outputAudioMixerGroup = AudioOutput;
         AudioComponent.clip = weapon.ShotSound; // 소리 파일
         AudioComponent.rolloffMode = AudioRolloffMode.Linear; // 멀리 갈수록 안들리게
         if (AttackID != null) // 3d 오디오는 자신이 아닌 다른 사람이 쏜경우에만 적용함!!!

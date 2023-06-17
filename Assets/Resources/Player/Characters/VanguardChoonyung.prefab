@@ -73,7 +73,7 @@ AudioSource:
   m_GameObject: {fileID: 2552290573701240761}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -6016633135228307155, guid: fa2a888139f472b47971f983ead2807c, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -889,35 +889,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!114 &1413149561734426339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3103494180561504268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16e031a16dcd30146a3a2d2732da797c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaincameraCoords: {x: 0.112, y: 1.691, z: -0.068}
-  HandHandler: {fileID: 347074073}
-  MyHandCoords: {x: 0, y: 0, z: 0}
---- !u!114 &2992220862161791213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3103494180561504268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e659163798958e242be211bfd4cac519, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationSpeed: 40
-  MoveSpeed: 25
 --- !u!114 &1408047453887267065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -947,6 +918,35 @@ MonoBehaviour:
   - {fileID: 8300000, guid: dc51086bc85dc5448b059b6487ce0e0b, type: 3}
   - {fileID: 8300000, guid: bf247942e61355f4d9d1804c09c647ee, type: 3}
   - {fileID: 8300000, guid: 50d72a013f13ce0488147b799a838890, type: 3}
+--- !u!114 &1413149561734426339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3103494180561504268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16e031a16dcd30146a3a2d2732da797c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaincameraCoords: {x: 0.112, y: 1.691, z: -0.068}
+  HandHandler: {fileID: 347074073}
+  MyHandCoords: {x: 0, y: 0, z: 0}
+--- !u!114 &2992220862161791213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3103494180561504268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e659163798958e242be211bfd4cac519, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 40
+  MoveSpeed: 25
 --- !u!4 &6266165128660562939 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -1070350730909333850, guid: 64e4cd8bbe1c70348bb6a32255229edf, type: 3}

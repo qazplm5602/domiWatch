@@ -24628,6 +24628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BloodEffect: {fileID: 1000013355911406, guid: eb58e4ac1ffd8c94fa524c70b8475e40, type: 3}
+  AudioOutput: {fileID: -6016633135228307155, guid: fa2a888139f472b47971f983ead2807c, type: 2}
   MaxWeaponAmmo: {fileID: 60393132}
   CurrnetWeaponAmmo: {fileID: 734337710}
   Weapons:
