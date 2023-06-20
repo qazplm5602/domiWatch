@@ -222,7 +222,6 @@ public class WeaponManager : MonoBehaviour
     }
 
     GameObject UpdateWeapon(GameObject Hand, domiWeapon Weapon) {
-        print("update!");
         Transform GetWeapon = Hand.transform.GetChild(0);
         if (GetWeapon)
             Destroy(GetWeapon.gameObject); // 총 삭제

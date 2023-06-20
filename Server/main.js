@@ -5,6 +5,7 @@ global.TriggerEvent = {};
 // 스크륍트
 const UserManager = require("./lib/UserManager.js");
 const LoginSys = require("./scripts/LoginSystem.js");
+const LogSys = require("./lib/LogUtil.js");
 require("./scripts/room/RoomMain.js");
 require("./scripts/JoinLeft.js");
 
@@ -93,12 +94,13 @@ const server = net.createServer(function(socket) {
             message = JSON.parse(data);
         } catch {}
 
-        if (message === undefined || message.type !== "domiServer.Login" || message.data === undefined || typeof(message.data.name) !== "string" || typeof(message.data.HWID) !== "string") {
+        if (message === undefined || message.type !== "domiServer.Login" || message.data === undefined || typeof(message.data.name) !== "string" || typeof(message.data.HWID) !== "string" || message.data.HWID.length <= 0) {
             socket.kick("잘못된 로그인 데이터 입니다.");
             return;
         }
         
         const UserName = message.data.name;
+        const HWID = message.data.HWID; // 하드웨어 수집
         
         if (UserName.length < 2) {
             socket.kick("이름은 2글자 이상이여야 합니다.");
@@ -112,6 +114,7 @@ const server = net.createServer(function(socket) {
         // }
 
         const ID = LoginSys.RandomString(20);
+        LogSys.LogWrite(`유저 접속! / ${UserName}(${ID}) / HWID : ${HWID}`);
 
         // 문을 열어주쟈
         SocketEvent_Init(ID);
@@ -121,3 +124,4 @@ const server = net.createServer(function(socket) {
 });
 
 server.listen(Config.port, () => console.log("[main] 서버 출항 준비 완료! Port: "+Config.port));
+LogSys.LogWrite("서버 켜짐!");
