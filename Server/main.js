@@ -1,4 +1,5 @@
 const net = require("net");
+const fs = require("fs");
 const Config = global.Config = require("./config.json");
 global.TriggerEvent = {};
 
@@ -106,6 +107,24 @@ const server = net.createServer(function(socket) {
             socket.kick("이름은 2글자 이상이여야 합니다.");
             return;
         }
+
+        let BanList;
+        try {
+            BanList = JSON.parse(fs.readFileSync("./Ban.json", 'utf-8'));
+        } catch {
+            socket.kick("시스템 오류. (Login:1)");
+            return;
+        }
+        
+        // 하드웨어 밴
+        for (let index = 0; index < BanList.length; index++) {
+            const N_hwid = BanList[index];
+            if (N_hwid === HWID) {
+                socket.kick("HWID 차단이 되어있습니다.");
+                return;
+            }
+        }
+        
 
         // 누군가 이미 접속되어있음
         // if (Players[String(ID)] !== undefined) {
