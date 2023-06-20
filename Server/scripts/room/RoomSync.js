@@ -27,6 +27,8 @@ TriggerEvent["Room.GetAllPlayer"] = function(id) {
         originPlayer.socket.send("Room.MessageAdd", `<color=#E5D85C>[${Player.name}] 님이 접속하였습니다.</color>`);
     }
 
+    if (Object.keys(RoomPlayers).length <= 1) // 솔로 ㅠㅠ
+        Player.socket.send("Room.MessageAdd", `<color=#F15F5F>[domiServer] 이 게임은 멀티게임인데 혼자계시네요. 다른 친구도 초대해보세요!</color>`);
     Player.socket.send("Room.ScoreAddMY", { id: id, name: Player.name }); // 자기자신 스코어보드 추가
     Player.socket.send("Room.ResultAllPlayer", SendPlayers);
 

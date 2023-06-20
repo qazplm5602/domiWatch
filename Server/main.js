@@ -93,35 +93,30 @@ const server = net.createServer(function(socket) {
             message = JSON.parse(data);
         } catch {}
 
-        if (message === undefined || message.type !== "domiServer.Login" || message.data === undefined || message.data.id === undefined || message.data.password === undefined) {
+        if (message === undefined || message.type !== "domiServer.Login" || message.data === undefined || typeof(message.data.name) !== "string" || typeof(message.data.HWID) !== "string") {
             socket.kick("잘못된 로그인 데이터 입니다.");
             return;
         }
-        const ID = message.data.id;
-        const Password = message.data.password;
         
-        if (String(ID).length <= 0 || String(Password).length <= 0) {
-            socket.kick("아아디, 패스워드를 확인하세요.");
-            return;
-        }
-
-        let result = await LoginSys.Login(ID, Password);
-
-        if (result.err) {
-            socket.kick(result.err);
+        const UserName = message.data.name;
+        
+        if (UserName.length < 2) {
+            socket.kick("이름은 2글자 이상이여야 합니다.");
             return;
         }
 
         // 누군가 이미 접속되어있음
-        if (Players[String(ID)] !== undefined) {
-            socket.kick("다른 클라이언트에서 접속중입니다.");
-            return;
-        }
+        // if (Players[String(ID)] !== undefined) {
+        //     socket.kick("다른 클라이언트에서 접속중입니다.");
+        //     return;
+        // }
+
+        const ID = LoginSys.RandomString(20);
 
         // 문을 열어주쟈
-        SocketEvent_Init(result.id);
+        SocketEvent_Init(ID);
         // 로그인 성공!
-        UserManager.AddPlayer(result.id, result.name, socket);
+        UserManager.AddPlayer(ID, UserName, socket);
     });
 });
 
