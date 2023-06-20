@@ -7,12 +7,12 @@ using TMPro;
 using LitJson;
 
 class domiLoginForm {
-    public string id;
-    public string password;
+    public string name;
+    public string HWID;
 
-    public domiLoginForm(string _id, string _password) {
-        id = _id;
-        password = _password;
+    public domiLoginForm(string _name, string _HWID) {
+        name = _name;
+        HWID = _HWID;
     }
 }
 
@@ -24,7 +24,6 @@ public class LobbyManager : MonoBehaviour
     [SerializeField] GameObject InputUI;
 
     TMP_InputField ID_Input;
-    TMP_InputField Password_Input;
 
     // 서버 연결 성공여부
     bool isConnect = false;
@@ -36,7 +35,6 @@ public class LobbyManager : MonoBehaviour
         NetworkCore.EventListener["Lobby.Init"] = LobbyChange;
 
         ID_Input = InputUI.transform.Find("ID_Input").GetComponent<TMP_InputField>();
-        Password_Input = InputUI.transform.Find("Password_Input").GetComponent<TMP_InputField>();
     }
     private void Start() {
         // 커서 설정
@@ -60,7 +58,7 @@ public class LobbyManager : MonoBehaviour
     }
 
     public void InputChange() {
-        if (ID_Input.text.Length <= 0 || Password_Input.text.Length <= 0)
+        if (ID_Input.text.Length <= 0)
             PlayButton.GetComponent<LobbyButton>().SetLock();
         else
             PlayButton.GetComponent<LobbyButton>().UnLock();
@@ -80,7 +78,7 @@ public class LobbyManager : MonoBehaviour
             InputUI.GetComponent<CanvasGroup>().DOFade(1, .2f);
 
             // 버튼 위치
-            PlayButton.GetComponent<RectTransform>().DOAnchorPosY(200, 0.3f).SetEase(Ease.OutQuad);
+            PlayButton.GetComponent<RectTransform>().DOAnchorPosY(280, 0.3f).SetEase(Ease.OutQuad);
             return;
         }
 
@@ -105,8 +103,8 @@ public class LobbyManager : MonoBehaviour
         isConnect = true;
         Loading.GetComponentInChildren<TextMeshProUGUI>().text = "연결 성공! 서버 응답을 기다리는중...";
 
-        // 아이디랑 패스워드 보냄
-        NetworkCore.Send("domiServer.Login", new domiLoginForm(ID_Input.text, Password_Input.text));
+        // 이름, HWID 보냄
+        NetworkCore.Send("domiServer.Login", new domiLoginForm(ID_Input.text, SystemInfo.deviceUniqueIdentifier));
     }
 
     void ErrorConnect(string Why) {
