@@ -1,0 +1,10 @@
+.bannder-domi {
+    width: max-content;
+    display: block;
+    margin: 0 auto;
+}
+
+.bannder-domi > img {
+    height: 130px;
+    width: 800px;
+}

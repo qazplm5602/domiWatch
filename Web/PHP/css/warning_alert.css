@@ -1,0 +1,30 @@
+.alert-box {
+    width: max-content;
+    height: max-content;
+
+    margin: 20px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.alert-box > .alert-title {
+    font-size: 18px;
+    font-weight: bold;
+    
+    color: white;
+    background: #ff205f;
+
+    width: max-content;
+    padding: 5px 10px;
+
+    margin-bottom: 5px;
+}
+
+.alert-box > li {
+    /* margin-left: 5px; */
+    font-size: 14px;
+}
+
+.alert-box > li::marker {
+    color: rgb(97, 189, 74);
+}
