@@ -1,0 +1,77 @@
+.server-title {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+
+    text-align: center;
+
+    text-shadow: 0 0 10px white;
+    margin-top: 20px;
+}
+
+.server-box {
+    display: block;
+    width: 100%;
+    max-width: 800px;
+    height: 80px;
+    
+    border-radius: 10px;
+    
+    background: rgba(128, 128, 128, 0.3);
+    margin: 0 auto;
+    margin-top: 10px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.server-box > .server-icon {
+    height: calc(100% - 20px);
+}
+.server-box > .server-icon.domiReverse {
+    filter: invert(1);
+}
+
+.server-box > .half-list {
+    width: 100%;
+    height: 100%;
+    
+    margin-left: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.server-box > .half-list > div:first-child {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 3px;
+}
+
+.server-box > .half-list > div {
+    font-size: 16px;
+    font-weight: 500;
+
+    color: white;
+}
+
+.server-box > .half-list > div > span {
+    float: right;
+}
+
+.server-box > .half-list > div > span.status.online {
+    color: rgb(97, 189, 74);
+}
+.server-box > .half-list > div > span.status.offline {
+    color: gray;
+}
+
+.server-box > .half-list > div:nth-child(2) {
+    font-size: 15px;
+    color: gray;
+
+    margin-top: 3px;
+}

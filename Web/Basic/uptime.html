@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/domiserver.css">
+    <style>
+        body {
+            background: #131313;
+        }
+    </style>
+
+    <!-- JS -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="./js/domi.js"></script>
+
+    <title>domiWatch - 서버정보</title>
+</head>
+<body>
+    <!-- Header (이건 php로 incloud 할꺼임) -->
+    <header class="header-main">
+        <img class="header-logo" src="./assets/domiLogo.png">
+        <section class="header-menus">
+            <a href="./">메인</a>
+            <a href="./download">다운로드</a>
+            <a href="./uptime" class="active">서버 업타임</a>
+        </section>
+        <button class="header-Download">
+            <div class="BackGround_Domi"></div>
+            <div class="domi-marker"></div>
+            <div class="download-text">다운로드</div>
+        </button>
+    </header>
+
+    <!-- 서버 정보 -->
+    <div class="server-title">서버 정보</div>
+    <section class="server-box" domi-endpoint="ggm.domi.kr" domi-uri="domiWatch/api/status">
+        <img class="server-icon domiReverse" src="./assets/157359.png">
+        <section class="half-list">
+            <div>도미서버 - 1 <span class="status offline">불러오는중...</span></div>
+            <div>Ping: -- <span>--명 접속중</span></div>
+        </section>
+    </section>
+    <section class="server-box">
+        <img class="server-icon domiReverse" src="./assets/157359.png">
+        <section class="half-list">
+            <div>도미서버 - 2 <span class="status offline">오프라인</span></div>
+            <div>Ping: -- <span>--명 접속중</span></div>
+        </section>
+    </section>
+    <section class="server-box">
+        <img class="server-icon domiReverse" src="./assets/157359.png">
+        <section class="half-list">
+            <div>도미서버 - 비상용 <span class="status offline">오프라인</span></div>
+            <div>Ping: -- <span>--명 접속중</span></div>
+        </section>
+    </section>
+</body>
+</html>

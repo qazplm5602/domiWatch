@@ -1,0 +1,141 @@
+.header-main {
+    position: sticky;
+
+    width: 100%;
+    height: 80px;
+
+    background: #131313;
+    border-bottom: 2px solid rgb(97, 189, 74);
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-main > .header-logo {
+    height: calc(100% - 15px);
+}
+
+.header-main > .header-menus > a {
+    text-decoration-line: none;
+    color: rgb(200, 200, 200);
+    font-size: 20px;
+    font-weight: bold;
+
+    position: relative;
+}
+
+.header-main > .header-menus > a:not(:first-child) {
+    margin-left: 20px;
+}
+
+.header-main > .header-menus > a.active {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.header-main > .header-menus > a.active::before {
+    content: '';
+    position: absolute;
+
+    left: 50%;
+    bottom: -5px;
+
+    width: calc(100% + 10px);
+    height: 3px;
+    transform: translate(-50%,0);
+
+    background: white;
+}
+
+.header-main > .header-menus > a:hover {
+    color: rgb(91, 228, 86);
+}
+
+.header-main > .header-menus > a.active {
+    color: white;
+}
+
+/* 다운로드 버튼 */
+.header-main > .header-Download {
+    position: relative;
+
+    width: 200px;
+    height: 100%;
+
+    font-size: 35px;
+    font-weight: bold;
+
+    border: none;
+
+    background: rgb(97, 189, 74);
+
+    cursor: pointer;
+    
+    overflow: hidden;
+}
+
+.header-main > .header-Download > .download-text {
+    position: absolute;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    top: 0;
+    left: 0;
+
+    color: white;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+
+    transition: color 250ms;
+}
+
+.header-main > .header-Download > .BackGround_Domi {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    top: 0;
+    left: -200px;
+    background: white;
+
+    border: 5px solid rgb(97, 189, 74);
+    border-radius: 10px;
+    box-sizing: border-box;
+
+    transition: left 250ms;
+}
+
+.header-main > .header-Download:hover > .BackGround_Domi {
+    left: 0;
+}
+
+.header-main > .header-Download:hover > .download-text {
+    color: rgb(64, 64, 64);
+    /* text-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
+}
+.header-main > .header-Download > .domi-marker {
+    position: absolute;
+    
+    width: calc(100% - 50px);
+    height: 20px;
+
+    bottom: 15px;
+    left: 50%;
+    transform: translate(-50%,0);
+
+    background: #bfffa1;
+
+    opacity: 0;
+    /* display: none; */
+    transition: opacity 250ms;
+}
+
+.header-main > .header-Download:hover > .domi-marker {
+    /* display: block; */
+    opacity: 1;
+}

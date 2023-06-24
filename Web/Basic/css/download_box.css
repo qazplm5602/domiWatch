@@ -1,0 +1,94 @@
+.download-box {
+    width: 100%;
+    height: 500px;
+
+    background-image: url(../assets/background.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+
+    position: relative;
+}
+
+.download-box > .black-back {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.download-box > .download-content {
+    position: absolute;
+
+    width: max-content;
+    height: max-content;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.download-box > .download-content > .title {
+    color: white;
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.download-box > .download-content > a {
+    width: max-content;
+    display: block;
+    margin: 0 auto; 
+    margin-top: 5px;
+    text-decoration-line: none;
+}
+
+.download-box > .download-content > a > .download-button {
+    margin: 0 auto;
+    position: relative;
+
+    font-size: 30px;
+    font-weight: bold;
+
+    color: white;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    background: rgb(97, 189, 74);
+    border: none;
+
+    padding: 8px 20px;
+
+    /* width: 100px; */
+    /* height: 100px; */
+
+    cursor: pointer;
+
+    display: block;
+
+    transition: box-shadow 250ms;
+}
+
+.download-box > .download-content > a > .download-button:hover {
+    box-shadow: 0 0 10px rgba(97, 189, 74, 255);
+}
+
+.download-box > .download-content > a > .download-button::after {
+    content: '';
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+    width: calc( 100% + 5px );
+    height: calc( 100% + 5px );;
+    
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: width 250ms, height 250ms;
+}
+
+.download-box > .download-content > a > .download-button:hover::after {
+    width: calc( 100% + 11px );
+    height: calc( 100% + 11px );
+}
