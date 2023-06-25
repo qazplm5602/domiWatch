@@ -9,6 +9,7 @@ const LoginSys = require("./scripts/LoginSystem.js");
 const LogSys = require("./lib/LogUtil.js");
 require("./scripts/room/RoomMain.js");
 require("./scripts/JoinLeft.js");
+require("./scripts/domiAPI.js");
 
 const server = net.createServer(function(socket) {
     ////////// socket 초기화 //////////
