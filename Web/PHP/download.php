@@ -16,7 +16,7 @@
         <!-- 내용s -->
         <section class="download-content">
             <div class="title">★ 100% ※무료 다운로드 ★</div>
-            <a href="https://domi.kr/img/logo.png" download>
+            <a href="./Downloads/domiWatch-release.zip" download>
                 <button class="download-button">다운로드</button>
             </a>
         </section>
