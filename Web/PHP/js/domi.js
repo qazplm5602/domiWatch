@@ -15,7 +15,7 @@ $(function() {
             success: function(count) {
                 count = Number(count);
                 $(element).find(".status").text("온라인").removeClass("offline").addClass("online");
-                $($(element).find(".half-list").children()[1]).html(`Ping: ${new Date() - StartTime} <span>${count}명 접속중</span>`);
+                $($(element).find(".half-list").children()[1]).html(`Ping: ${new Date() - StartTime}ms <span>${count}명 접속중</span>`);
             },
             error: function() {
                 $(element).find(".status").text("오프라인");
