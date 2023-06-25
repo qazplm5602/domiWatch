@@ -14,7 +14,7 @@ $(function() {
             cache: false,
             success: function(count) {
                 count = Number(count);
-                $(element).find(".status").text("온라인").addClass("online");
+                $(element).find(".status").text("온라인").removeClass("offline").addClass("online");
                 $($(element).find(".half-list").children()[1]).html(`Ping: ${new Date() - StartTime} <span>${count}명 접속중</span>`);
             },
             error: function() {
