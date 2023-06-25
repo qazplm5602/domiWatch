@@ -2122,8 +2122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8d53a5e19884f044b7ba560b252aaa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ServerIP: 127.0.0.1
-  ServerPort: 3000
+  ServerIP: mail.domi.kr
+  ServerPort: 25565
   BufferSize: 1024
 --- !u!4 &1060616822
 Transform:
@@ -2794,14 +2794,14 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 5
+  m_ContentType: 0
   m_InputType: 0
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 0
   m_HideMobileInput: 0
   m_HideSoftKeyboard: 0
-  m_CharacterValidation: 5
+  m_CharacterValidation: 0
   m_RegexValue: 
   m_GlobalPointSize: 14
   m_CharacterLimit: 0
