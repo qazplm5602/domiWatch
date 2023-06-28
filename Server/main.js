@@ -83,9 +83,6 @@ const server = net.createServer(function(socket) {
         socket.once("close", function() {
             UserManager.RemovePlayer(MyID);
         });
-        socket.on("error", function(err) {
-            // console.error(err);
-        });
     }
 
     // 로그인...
@@ -140,6 +137,11 @@ const server = net.createServer(function(socket) {
         SocketEvent_Init(ID);
         // 로그인 성공!
         UserManager.AddPlayer(ID, UserName, socket);
+    });
+
+    // 오류 예외처리
+    socket.on("error", function(err) {
+        // console.error(err);
     });
 });
 
