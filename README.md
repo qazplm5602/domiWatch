@@ -5,6 +5,9 @@ Unity FPS 멀티플레이 게임입니다.
 * [**Server/**](./Server/): Node.js 서버
 * [**Web/**](./Web/): domiWatch 사이트
 
+## 브랜치
+**NoAccount**는 아이디, 비밀번호 없이 로그인이 가능한 버전이며 HWID 차단 기능이 있습니다.
+
 ## 에셋 출처
 * [BlueArchive ユウカ](https://booth.pm/ko/items/3658411)
 * [Vanguard By T. Choonyung](https://www.mixamo.com)
