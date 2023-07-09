@@ -20,3 +20,11 @@
         <div class="download-text">다운로드</div>
     </button>
 </header>
+
+<!-- 깃허브 -->
+<link rel="stylesheet" href="./css/github.css">
+<div class="git-main">
+    <a href="https://github.com/qazplm5602/domiWatch">
+        <img src="./assets/github.svg">
+    </a>
+</div>

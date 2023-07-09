@@ -1,0 +1,32 @@
+.git-main {
+    position: fixed;
+
+    right: -75px;
+    bottom: -75px;
+
+    width: 150px;
+    height: 150px;
+
+    background: black;
+    transform: rotate(45deg);
+}
+
+.git-main > a {
+    width: max-content;
+    height: max-content;
+}
+
+.git-main > a > img {
+    position: absolute;
+    top: 53px;
+    left: 15px;
+
+    width: 40px;
+    transform: rotate(-45deg);
+    transition: transform 250ms, filter 250ms;
+}
+
+.git-main > a > img:hover {
+    filter: drop-shadow( 0 0 8px rgba(255, 255, 255, 0.7));
+    transform: rotate(315deg) scale(1.2);
+}
