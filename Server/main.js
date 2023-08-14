@@ -131,7 +131,7 @@ const server = net.createServer(function(socket) {
         // }
 
         const ID = LoginSys.RandomString(20);
-        LogSys.LogWrite(`유저 접속! / ${UserName}(${ID}) / HWID : ${HWID}`);
+        LogSys.LogWrite(`유저 접속! / ${UserName}(${ID}) / HWID : ${HWID} / IP : ${socket.remoteAddress}`);
 
         // 문을 열어주쟈
         SocketEvent_Init(ID);
